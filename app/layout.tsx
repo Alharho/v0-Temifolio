@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { Inter, Space_Mono } from 'next/font/google'
+import { Inter, Space_Mono, Playfair_Display } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
 import './globals.css'
 
@@ -12,6 +12,13 @@ const spaceMono = Space_Mono({
   subsets: ["latin"],
   weight: ["400", "700"],
   variable: "--font-mono"
+});
+
+const playfair = Playfair_Display({ 
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  style: ["normal", "italic"],
+  variable: "--font-serif"
 });
 
 export const metadata: Metadata = {
@@ -50,7 +57,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="bg-background">
-      <body className={`${inter.variable} ${spaceMono.variable} font-sans antialiased`}>
+      <body className={`${inter.variable} ${spaceMono.variable} ${playfair.variable} font-sans antialiased`}>
         {children}
         {process.env.NODE_ENV === 'production' && <Analytics />}
       </body>

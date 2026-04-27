@@ -1,20 +1,15 @@
 import Image from "next/image"
 import Link from "next/link"
-import { Linkedin, Mail, ExternalLink } from "lucide-react"
+import { Linkedin, ExternalLink, Twitter, Instagram, Dribbble } from "lucide-react"
 
 const navLinks = [
   { href: "#about", label: "About" },
-  { href: "#experience", label: "Experience" },
   { href: "#skills", label: "Skills" },
+  { href: "#experience", label: "Experience" },
   { href: "#projects", label: "Projects" },
 ]
 
 const socialLinks = [
-  {
-    href: "mailto:olaleretemitopejamiu@gmail.com",
-    icon: Mail,
-    label: "Email",
-  },
   {
     href: "https://www.linkedin.com/in/temitope-olalere",
     icon: Linkedin,
@@ -25,11 +20,26 @@ const socialLinks = [
     icon: ExternalLink,
     label: "Behance",
   },
+  {
+    href: "https://twitter.com",
+    icon: Twitter,
+    label: "Twitter",
+  },
+  {
+    href: "https://instagram.com",
+    icon: Instagram,
+    label: "Instagram",
+  },
+  {
+    href: "https://dribbble.com",
+    icon: Dribbble,
+    label: "Dribbble",
+  },
 ]
 
 export function Footer() {
   return (
-    <footer className="py-12 border-t border-border">
+    <footer className="py-12 bg-[#0a0a0a] border-t border-white/5">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col md:flex-row items-center justify-between gap-8">
           {/* Logo */}
@@ -43,39 +53,39 @@ export function Footer() {
             />
           </Link>
 
-          {/* Navigation */}
-          <nav className="flex flex-wrap items-center justify-center gap-6">
-            {navLinks.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className="text-sm text-muted-foreground hover:text-primary transition-colors"
-              >
-                {link.label}
-              </Link>
-            ))}
-          </nav>
-
           {/* Social Links */}
           <div className="flex items-center gap-4">
             {socialLinks.map((link) => (
               <a
                 key={link.label}
                 href={link.href}
-                target={link.href.startsWith("mailto") ? undefined : "_blank"}
-                rel={link.href.startsWith("mailto") ? undefined : "noopener noreferrer"}
-                className="text-muted-foreground hover:text-primary transition-colors"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:text-primary hover:border-primary/30 transition-all"
                 aria-label={link.label}
               >
-                <link.icon className="h-5 w-5" />
+                <link.icon className="h-4 w-4" />
               </a>
             ))}
           </div>
         </div>
 
-        <div className="mt-8 pt-8 border-t border-border text-center">
-          <p className="text-sm text-muted-foreground">
-            {new Date().getFullYear()} Temitope Olalere. All rights reserved.
+        <div className="mt-8 pt-8 border-t border-white/5 flex flex-col md:flex-row items-center justify-between gap-4">
+          {/* Navigation */}
+          <nav className="flex flex-wrap items-center justify-center gap-6">
+            {navLinks.map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                className="text-sm text-gray-500 hover:text-white transition-colors"
+              >
+                {link.label}
+              </Link>
+            ))}
+          </nav>
+
+          <p className="text-sm text-gray-600">
+            &copy; {new Date().getFullYear()} Temitope Olalere &middot; Lagos, Nigeria
           </p>
         </div>
       </div>
