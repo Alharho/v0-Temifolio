@@ -1,6 +1,7 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
+import { motion, useInView } from "framer-motion"
 import { Button } from "@/components/ui/button"
 import { ArrowUpRight } from "lucide-react"
 
@@ -17,35 +18,38 @@ const softwareIcons = [
 ]
 
 const stats = [
-  { value: "5+", label: "Years Experience", sublabel: "Creative design career" },
-  { value: "3+", label: "Industries Served", sublabel: "Across diverse industries" },
-  { value: "5+", label: "Web App Designs", sublabel: "Multi-brand campaigns" },
-  { value: "30%", label: "Avg. Sales Boost", sublabel: "Measurable client growth" },
+  { value: 5, suffix: "+", label: "Years Experience", desc: "Creative design career" },
+  { value: 191, suffix: "+", label: "Clients Served", desc: "Across diverse industries" },
+  { value: 25, suffix: "+", label: "Project Collaborations", desc: "Multi-brand campaigns" },
+  { value: 33.3, suffix: "%", label: "Avg. Sales Boost", desc: "Measurable client growth" },
 ]
 
-function AnimatedCounter({ target, suffix = "" }: { target: number; suffix?: string }) {
+function CountUp({ target, suffix, duration = 2000 }: { target: number; suffix: string; duration?: number }) {
   const [count, setCount] = useState(0)
+  const ref = useRef<HTMLSpanElement>(null)
+  const inView = useInView(ref, { once: true })
 
   useEffect(() => {
-    const duration = 2000
+    if (!inView) return
+    const isDecimal = target % 1 !== 0
     const steps = 60
     const increment = target / steps
     let current = 0
-
+    let step = 0
     const timer = setInterval(() => {
-      current += increment
-      if (current >= target) {
-        setCount(target)
-        clearInterval(timer)
-      } else {
-        setCount(Math.floor(current))
-      }
+      step++
+      current = Math.min(current + increment, target)
+      setCount(isDecimal ? parseFloat(current.toFixed(1)) : Math.floor(current))
+      if (step >= steps) clearInterval(timer)
     }, duration / steps)
-
     return () => clearInterval(timer)
-  }, [target])
+  }, [inView, target, duration])
 
-  return <span>{count}{suffix}</span>
+  return (
+    <span ref={ref}>
+      {count}{suffix}
+    </span>
+  )
 }
 
 export function Hero() {
@@ -57,9 +61,12 @@ export function Hero() {
       {/* Floating Software Icons */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         {softwareIcons.map((icon, index) => (
-          <div
+          <motion.div
             key={icon.abbr}
-            className={`absolute ${icon.color} w-10 h-10 rounded-lg flex items-center justify-center text-xs font-bold shadow-lg opacity-60`}
+            initial={{ opacity: 0, scale: 0.5 }}
+            animate={{ opacity: 0.6, scale: 1 }}
+            transition={{ duration: 0.5, delay: index * 0.1 }}
+            className={`absolute ${icon.color} w-10 h-10 rounded-lg flex items-center justify-center text-xs font-bold shadow-lg`}
             style={{
               top: `${15 + (index % 3) * 25}%`,
               left: index < 5 ? `${5 + (index * 8)}%` : undefined,
@@ -68,12 +75,17 @@ export function Hero() {
             }}
           >
             {icon.abbr}
-          </div>
+          </motion.div>
         ))}
       </div>
       
       <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-32 text-center">
-        <div className="space-y-6">
+        <motion.div 
+          className="space-y-6"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+        >
           {/* Availability badge */}
           <div className="inline-flex items-center gap-2 text-sm text-primary">
             <span className="w-2 h-2 bg-primary rounded-full animate-pulse" />
@@ -122,25 +134,28 @@ export function Hero() {
               </a>
             </Button>
           </div>
-        </div>
+        </motion.div>
       </div>
       
-      {/* Stats Bar */}
-      <div className="relative z-10 w-full border-t border-white/10">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-2 md:grid-cols-4 divide-x divide-white/10">
-            {stats.map((stat, index) => (
-              <div key={index} className="py-8 px-4 text-center">
-                <p className="text-3xl md:text-4xl font-serif text-primary">
-                  {stat.value.includes("%") ? (
-                    <AnimatedCounter target={parseInt(stat.value)} suffix="%" />
-                  ) : (
-                    <AnimatedCounter target={parseInt(stat.value)} suffix="+" />
-                  )}
-                </p>
-                <p className="text-sm text-white mt-1">{stat.label}</p>
-                <p className="text-xs text-gray-500 mt-0.5">{stat.sublabel}</p>
-              </div>
+      {/* Stats Section with Glass Cards */}
+      <div className="relative z-10 py-16">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+            {stats.map((stat, i) => (
+              <motion.div
+                key={stat.label}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: i * 0.1 }}
+                className="backdrop-blur-md bg-white/5 rounded-2xl p-6 border border-white/10 text-center group hover:border-primary/30 transition-all"
+              >
+                <div className="font-serif text-3xl sm:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-primary to-orange-300 mb-1">
+                  <CountUp target={stat.value} suffix={stat.suffix} />
+                </div>
+                <div className="font-semibold text-white text-sm mb-1">{stat.label}</div>
+                <div className="text-xs text-gray-500">{stat.desc}</div>
+              </motion.div>
             ))}
           </div>
         </div>
