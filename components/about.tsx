@@ -1,3 +1,6 @@
+"use client"
+
+import { motion } from "framer-motion"
 import { Paintbrush, Target, Lightbulb, Users } from "lucide-react"
 
 const services = [
@@ -27,14 +30,20 @@ const tools = ["Adobe CC", "Figma", "CorelDraw", "Canva", "Motion Graphics", "UI
 
 export function About() {
   return (
-    <section id="about" className="py-24 bg-[#0d0d0d]">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <section id="about" className="py-28 sm:py-36 bg-[#0d0d0d]">
+      <div className="mx-auto max-w-7xl px-6 sm:px-8 lg:px-12">
         {/* About Me Header */}
-        <div className="mb-16">
-          <p className="text-primary text-sm tracking-widest uppercase mb-4">About Me</p>
-          <div className="grid lg:grid-cols-2 gap-12 items-start">
+        <motion.div 
+          className="mb-20"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
+        >
+          <p className="text-primary text-xs tracking-[0.2em] uppercase font-medium mb-6">About Me</p>
+          <div className="grid lg:grid-cols-2 gap-16 items-start">
             <div>
-              <h2 className="text-4xl md:text-5xl font-serif text-white leading-tight">
+              <h2 className="text-4xl md:text-5xl lg:text-6xl font-serif text-white leading-[1.1] tracking-tight">
                 Designing with{" "}
                 <span className="text-primary italic">Purpose</span> &<br />
                 Visual <span className="text-primary italic">Impact</span>
@@ -42,61 +51,71 @@ export function About() {
             </div>
             <div className="lg:flex lg:justify-end">
               {/* Quote Card */}
-              <div className="bg-[#1a1a1a] rounded-2xl p-6 max-w-md border border-white/5">
-                <div className="text-4xl text-primary mb-4">&quot;</div>
-                <p className="text-gray-400 italic leading-relaxed">
+              <div className="bg-white/[0.02] rounded-2xl p-8 max-w-md border border-white/[0.06]">
+                <div className="text-5xl text-primary/60 font-serif leading-none mb-4">&ldquo;</div>
+                <p className="text-gray-400 italic leading-relaxed text-lg">
                   Design is not just what it looks like and feels like. Design is how it works — and how it drives results.
                 </p>
-                <div className="flex items-center gap-3 mt-6">
-                  <div className="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center text-primary font-bold text-sm">
+                <div className="flex items-center gap-4 mt-8">
+                  <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center text-primary font-semibold">
                     TJ
                   </div>
                   <div>
-                    <p className="text-white text-sm font-medium">Temitope J. Olalere</p>
-                    <p className="text-gray-500 text-xs">Creative Designer &middot; Lagos, Nigeria</p>
+                    <p className="text-white font-medium">Temitope J. Olalere</p>
+                    <p className="text-gray-500 text-sm">Creative Designer &middot; Lagos, Nigeria</p>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
+        </motion.div>
 
         {/* Bio Section */}
-        <div className="grid lg:grid-cols-2 gap-12 mb-16">
-          <div className="space-y-4 text-gray-400 leading-relaxed">
+        <motion.div 
+          className="grid lg:grid-cols-2 gap-16 mb-20"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
+        >
+          <div className="space-y-6 text-gray-400 leading-relaxed text-lg">
             <p>
               I&apos;m <span className="text-white font-medium">Temitope J. Olalere</span>, a highly creative Graphic Designer and Content Strategist based in Lagos, Nigeria. With over 5 years of experience, I specialise in delivering brand-focused designs, digital marketing campaigns, and cross-industry visual storytelling.
             </p>
             <p>
-              My work spans from fintech infographics and email templates to product packaging and UI/UX design — always with a focus on engagement, clarity, and aesthetic excellence. I&apos;m skilled in the full Adobe Creative Cloud suite, Figma, Canva, and motion graphics tools.
+              My work spans from fintech infographics and email templates to product packaging and UI/UX design — always with a focus on engagement, clarity, and aesthetic excellence.
             </p>
             {/* Tools Tags */}
             <div className="flex flex-wrap gap-2 pt-4">
               {tools.map((tool) => (
                 <span 
                   key={tool}
-                  className="px-3 py-1.5 bg-[#1a1a1a] text-gray-300 text-sm rounded-full border border-white/10"
+                  className="px-4 py-2 bg-white/[0.03] text-gray-300 text-sm rounded-full border border-white/[0.06]"
                 >
                   {tool}
                 </span>
               ))}
             </div>
           </div>
-        </div>
+        </motion.div>
 
         {/* Services Grid */}
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {services.map((service, index) => (
-            <div 
+            <motion.div 
               key={index}
-              className="bg-[#141414] rounded-2xl p-6 border border-white/5 hover:border-primary/30 transition-colors"
+              className="bg-white/[0.02] rounded-2xl p-6 sm:p-8 border border-white/[0.06] hover:border-primary/20 transition-all duration-300 group"
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: index * 0.08, ease: "easeOut" }}
             >
-              <div className="w-12 h-12 rounded-xl bg-[#1a1a1a] flex items-center justify-center mb-4 border border-white/10">
-                <service.icon className="h-5 w-5 text-primary" />
+              <div className="w-14 h-14 rounded-xl bg-white/[0.03] flex items-center justify-center mb-6 border border-white/[0.06] group-hover:border-primary/20 transition-colors duration-300">
+                <service.icon className="h-6 w-6 text-primary" />
               </div>
-              <h3 className="text-white font-medium mb-2">{service.title}</h3>
-              <p className="text-gray-500 text-sm leading-relaxed">{service.description}</p>
-            </div>
+              <h3 className="text-white font-semibold text-lg mb-3">{service.title}</h3>
+              <p className="text-gray-500 leading-relaxed">{service.description}</p>
+            </motion.div>
           ))}
         </div>
       </div>

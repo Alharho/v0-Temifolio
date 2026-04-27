@@ -5,18 +5,6 @@ import { motion, useInView } from "framer-motion"
 import { Button } from "@/components/ui/button"
 import { ArrowUpRight } from "lucide-react"
 
-const softwareIcons = [
-  { abbr: "Ps", name: "Photoshop", color: "bg-[#31a8ff]" },
-  { abbr: "Ai", name: "Illustrator", color: "bg-[#ff9a00]" },
-  { abbr: "Id", name: "InDesign", color: "bg-[#ff3366]" },
-  { abbr: "Ae", name: "After Effects", color: "bg-[#9999ff]" },
-  { abbr: "Pr", name: "Premiere", color: "bg-[#9999ff]" },
-  { abbr: "Cv", name: "Canva", color: "bg-[#00c4cc]" },
-  { abbr: "Cd", name: "CorelDraw", color: "bg-[#6dd400]" },
-  { abbr: "Fg", name: "Figma", color: "bg-[#f24e1e]" },
-  { abbr: "Cc", name: "CapCut", color: "bg-white text-black" },
-]
-
 const stats = [
   { value: 5, suffix: "+", label: "Years Experience", desc: "Creative design career" },
   { value: 191, suffix: "+", label: "Clients Served", desc: "Across diverse industries" },
@@ -55,73 +43,65 @@ function CountUp({ target, suffix, duration = 2000 }: { target: number; suffix: 
 export function Hero() {
   return (
     <section className="relative min-h-screen flex flex-col justify-center overflow-hidden bg-[#0d0d0d]">
-      {/* Gradient overlay at top */}
-      <div className="absolute top-0 right-0 w-1/2 h-1/2 bg-gradient-to-bl from-orange-500/20 via-orange-600/10 to-transparent blur-3xl" />
+      {/* Subtle grain texture overlay */}
+      <div className="absolute inset-0 opacity-[0.015] pointer-events-none" style={{
+        backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`,
+      }} />
       
-      {/* Floating Software Icons */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {softwareIcons.map((icon, index) => (
-          <motion.div
-            key={icon.abbr}
-            initial={{ opacity: 0, scale: 0.5 }}
-            animate={{ opacity: 0.6, scale: 1 }}
-            transition={{ duration: 0.5, delay: index * 0.1 }}
-            className={`absolute ${icon.color} w-10 h-10 rounded-lg flex items-center justify-center text-xs font-bold shadow-lg`}
-            style={{
-              top: `${15 + (index % 3) * 25}%`,
-              left: index < 5 ? `${5 + (index * 8)}%` : undefined,
-              right: index >= 5 ? `${5 + ((index - 5) * 8)}%` : undefined,
-              transform: `rotate(${(index - 4) * 5}deg)`,
-            }}
-          >
-            {icon.abbr}
-          </motion.div>
-        ))}
-      </div>
+      {/* Subtle gradient */}
+      <div className="absolute top-0 right-0 w-2/3 h-2/3 bg-gradient-to-bl from-primary/10 via-primary/5 to-transparent blur-3xl" />
       
-      <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-32 text-center">
+      <div className="relative z-10 mx-auto max-w-5xl px-6 sm:px-8 lg:px-12 py-32 text-center">
         <motion.div 
-          className="space-y-6"
-          initial={{ opacity: 0, y: 20 }}
+          className="space-y-8"
+          initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
         >
-          {/* Availability badge */}
-          <div className="inline-flex items-center gap-2 text-sm text-primary">
-            <span className="w-2 h-2 bg-primary rounded-full animate-pulse" />
-            Available for freelance work
-          </div>
-          
-          <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl tracking-tight">
-            <span className="text-white font-serif">Temitope J.</span>
+          <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl tracking-tight leading-[1.1]">
+            <span className="text-white font-serif font-medium">Temitope J.</span>
             <br />
-            <span className="text-primary font-serif italic">Olalere</span>
+            <span className="text-primary font-serif italic font-medium">Olalere</span>
           </h1>
           
-          <p className="text-xl sm:text-2xl text-gray-400 font-light">
-            Creative Graphic Designer & Content Strategist
-          </p>
+          <motion.p 
+            className="text-xl sm:text-2xl md:text-3xl text-white/90 font-light tracking-wide"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.3, duration: 0.6 }}
+          >
+            Strategic Design Partner
+          </motion.p>
           
-          <p className="mx-auto max-w-2xl text-gray-500 leading-relaxed">
-            5+ years delivering brand-focused designs, digital marketing campaigns, 
-            and visual storytelling across diverse industries.
-          </p>
+          <motion.p 
+            className="mx-auto max-w-2xl text-gray-400 text-base sm:text-lg leading-relaxed"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.4, duration: 0.6 }}
+          >
+            Transforming brands across <span className="text-white">fintech</span>, <span className="text-white">education</span>, <span className="text-white">FMCG</span>, and <span className="text-white">tech</span> with designs that drive measurable growth and lasting impact.
+          </motion.p>
           
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
+          <motion.div 
+            className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-6"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.5, duration: 0.6 }}
+          >
             <Button
               asChild
               size="lg"
-              className="bg-primary text-black hover:bg-primary/90 rounded-full px-8 font-medium"
+              className="bg-primary text-black hover:bg-primary/90 hover:scale-[1.02] rounded-full px-10 py-6 font-medium text-base transition-all shadow-lg shadow-primary/20"
             >
               <a href="#projects">
-                View Portfolio
+                View Work
               </a>
             </Button>
             <Button
               asChild
               variant="outline"
               size="lg"
-              className="border-white/20 text-white hover:bg-white/10 rounded-full px-8"
+              className="border-white/20 text-white hover:bg-white/5 hover:border-white/40 rounded-full px-10 py-6 transition-all"
             >
               <a
                 href="https://www.behance.net/temigfx"
@@ -129,32 +109,32 @@ export function Hero() {
                 rel="noopener noreferrer"
                 className="flex items-center gap-2"
               >
-                Behance Profile
+                Behance
                 <ArrowUpRight className="h-4 w-4" />
               </a>
             </Button>
-          </div>
+          </motion.div>
         </motion.div>
       </div>
       
       {/* Stats Section with Glass Cards */}
-      <div className="relative z-10 py-16">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="relative z-10 pb-20">
+        <div className="max-w-6xl mx-auto px-6">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
             {stats.map((stat, i) => (
               <motion.div
                 key={stat.label}
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: i * 0.1 }}
-                className="backdrop-blur-md bg-white/5 rounded-2xl p-6 border border-white/10 text-center group hover:border-primary/30 transition-all"
+                transition={{ duration: 0.6, delay: i * 0.1, ease: "easeOut" }}
+                className="backdrop-blur-md bg-white/[0.03] rounded-2xl p-6 sm:p-8 border border-white/[0.06] text-center group hover:border-primary/20 hover:bg-white/[0.05] transition-all duration-300"
               >
-                <div className="font-serif text-3xl sm:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-primary to-orange-300 mb-1">
+                <div className="font-serif text-3xl sm:text-4xl lg:text-5xl font-semibold text-transparent bg-clip-text bg-gradient-to-r from-primary to-orange-300 mb-2">
                   <CountUp target={stat.value} suffix={stat.suffix} />
                 </div>
-                <div className="font-semibold text-white text-sm mb-1">{stat.label}</div>
-                <div className="text-xs text-gray-500">{stat.desc}</div>
+                <div className="font-medium text-white text-sm sm:text-base mb-1">{stat.label}</div>
+                <div className="text-xs sm:text-sm text-gray-500">{stat.desc}</div>
               </motion.div>
             ))}
           </div>
