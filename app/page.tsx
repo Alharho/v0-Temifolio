@@ -4,6 +4,7 @@ import { About } from "@/components/about"
 import { Experience } from "@/components/experience"
 import { Skills } from "@/components/skills"
 import { Projects } from "@/components/projects"
+import { Process } from "@/components/process"
 import { Contact } from "@/components/contact"
 import { Footer } from "@/components/footer"
 import { WhatsAppButton } from "@/components/whatsapp-button"
@@ -14,9 +15,10 @@ export default function Home() {
       <Header />
       <Hero />
       <About />
-      <Skills />
       <Experience />
       <Projects />
+      <Process />
+      <Skills />
       <Contact />
       <Footer />
       <WhatsAppButton service="Graphic Design" />

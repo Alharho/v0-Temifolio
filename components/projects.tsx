@@ -6,30 +6,6 @@ import { ExternalLink, ArrowUpRight } from 'lucide-react'
 
 const projects = [
   {
-    title: 'Minimal marks, Maximum impact - 2025 Logofolio',
-    company: 'Logofolio Collection',
-    description: 'A curated collection of minimal logo designs showcasing the power of simple marks to create maximum visual impact.',
-    tags: ['Logo Design', 'Brand Identity', 'Minimalism'],
-    link: 'https://www.behance.net/gallery/248099793/Minimal-marks-Maximum-impact-2025-Logofolio',
-    thumb: 'https://mir-s3-cdn-cf.behance.net/project_modules/max_3840/5e9f8f248099793.682e0bd66f9ad.png',
-  },
-  {
-    title: 'Snapshare – Real-Time Visual System',
-    company: 'Snapshare App',
-    description: 'UI/UX and visual identity design for a real-time photo sharing application, creating a dynamic and intuitive visual design system.',
-    tags: ['UI/UX', 'App Design', 'Visual Identity'],
-    link: 'https://www.behance.net/gallery/247860145/Snapshare-Real-Time-Visual-System',
-    thumb: 'https://mir-s3-cdn-cf.behance.net/project_modules/max_3840/44f65c247860145.682c9f1c7e6f3.jpg',
-  },
-  {
-    title: 'Ledobiz – Brand Identity & Logo Style Guide',
-    company: 'Ledobiz Technologies',
-    description: 'Complete brand identity and comprehensive logo style guide for a technology company, establishing strong visual foundations across all touchpoints.',
-    tags: ['Brand Identity', 'Logo Design', 'Style Guide'],
-    link: 'https://www.behance.net/gallery/247722159/Ledobiz-Brand-Identity-and-Logo-Style-Guide',
-    thumb: 'https://mir-s3-cdn-cf.behance.net/project_modules/max_3840/43d7f3247722159.682b4c7b3c5e1.jpg',
-  },
-  {
     title: 'Visual Branding & Social Media System',
     company: 'SignalSpark Academy',
     description: 'Full brand-identity overhaul — comprehensive brand guide and social-media design strategy to strengthen digital presence and drive client acquisition.',
@@ -46,6 +22,30 @@ const projects = [
     thumb: 'https://mir-s3-cdn-cf.behance.net/projects/max_808/247511479.6882cc9cdfc93.jpg',
   },
   {
+    title: 'Brum Africa – Brand Designs & Visual Illustration',
+    company: 'Brum Africa',
+    description: 'Logo design and visual illustration for a purpose-driven African brand. Developed a cohesive identity reflecting growth, connection and opportunity.',
+    tags: ['Logo Design', 'Brand Identity', 'Illustration'],
+    link: 'https://www.behance.net/gallery/247509837/Brum-Africa-Brand-Designs-Visual-Illustration',
+    thumb: 'https://mir-s3-cdn-cf.behance.net/projects/max_808/247509837.6882c30f9b3f7.jpg',
+  },
+  {
+    title: 'Ledobiz – Brand Identity & Logo Style Guide',
+    company: 'Ledobiz Technologies',
+    description: 'Complete brand identity and comprehensive logo style guide for a technology company, establishing strong visual foundations across all touchpoints.',
+    tags: ['Brand Identity', 'Logo Design', 'Style Guide'],
+    link: 'https://www.behance.net/gallery/247722159/Ledobiz-Brand-Identity-and-Logo-Style-Guide',
+    thumb: 'https://mir-s3-cdn-cf.behance.net/project_modules/max_3840/43d7f3247722159.682b4c7b3c5e1.jpg',
+  },
+  {
+    title: 'Snapshare – Real-Time Visual System',
+    company: 'Snapshare App',
+    description: 'UI/UX and visual identity design for a real-time photo sharing application, creating a dynamic and intuitive visual design system.',
+    tags: ['UI/UX', 'App Design', 'Visual Identity'],
+    link: 'https://www.behance.net/gallery/247860145/Snapshare-Real-Time-Visual-System',
+    thumb: 'https://mir-s3-cdn-cf.behance.net/project_modules/max_3840/44f65c247860145.682c9f1c7e6f3.jpg',
+  },
+  {
     title: 'Call of Duty Mobile – Tournament Campaign',
     company: 'Kortis Legends / COD Community',
     description: 'High-impact event branding and tournament campaign visuals for the Kortis Legends COD gaming community — from scattered assets to a cohesive masterpiece.',
@@ -53,14 +53,31 @@ const projects = [
     link: 'https://www.behance.net/gallery/247495937/Call-of-Duty-Mobile-Tournament-Campaign',
     thumb: 'https://mir-s3-cdn-cf.behance.net/projects/max_808/247495937.6882c30f9b3f7.jpg',
   },
+  {
+    title: 'Minimal Marks, Maximum Impact – 2025 Logofolio',
+    company: 'Personal / Multi-brand',
+    description: 'A curated collection of logo marks from 2025 — minimal, bold, and built for impact across diverse brands and industries.',
+    tags: ['Logo Design', 'Brand Identity', 'Logofolio'],
+    link: 'https://www.behance.net/gallery/248099793/Minimal-marks-Maximum-impact-2025-Logofolio',
+    thumb: 'https://mir-s3-cdn-cf.behance.net/project_modules/max_3840/5e9f8f248099793.682e0bd66f9ad.png',
+  },
+  {
+    title: 'Rayvolt System – Brand Identity & Visual Content Design',
+    company: 'Rayvolt System',
+    description: 'Complete brand identity and visual content design system for a solar energy company, crafting a modern, energetic identity to communicate innovation and reliability.',
+    tags: ['Brand Identity', 'Visual Content', 'Energy'],
+    link: 'https://www.behance.net/gallery/248099900/Rayvolt-System-Brand-Identity-Visual-Content-Design',
+    thumb: 'https://mir-s3-cdn-cf.behance.net/projects/max_808/248099900.6882c30f9b3f7.jpg',
+  },
 ]
 
 export function Projects() {
   const [hoveredIdx, setHoveredIdx] = useState<number | null>(null)
 
   return (
-    <section id="projects" className="relative py-24 sm:py-32">
+    <section id="projects" className="relative py-24 sm:py-32 bg-[#0d0d0d]">
       <div className="max-w-7xl mx-auto px-6">
+        {/* Section Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -68,7 +85,7 @@ export function Projects() {
           className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-16"
         >
           <div>
-            <span className="text-xs text-primary tracking-widest uppercase">Work</span>
+            <span className="text-xs text-primary tracking-widest uppercase">WORK</span>
             <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold mt-3 text-white">
               Featured <span className="text-primary italic">Projects</span>
             </h2>
@@ -83,6 +100,7 @@ export function Projects() {
           </a>
         </motion.div>
 
+        {/* Projects Grid - 3 columns on large screens */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {projects.map((project, i) => (
             <motion.a
@@ -90,16 +108,16 @@ export function Projects() {
               href={project.link}
               target="_blank"
               rel="noopener noreferrer"
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
+              viewport={{ once: true, margin: "-100px" }}
               transition={{ duration: 0.5, delay: i * 0.08 }}
               onMouseEnter={() => setHoveredIdx(i)}
               onMouseLeave={() => setHoveredIdx(null)}
-              className="group backdrop-blur-md bg-white/5 rounded-2xl border border-white/10 hover:border-primary/30 transition-all overflow-hidden block"
+              className="group backdrop-blur-md bg-[#141414] rounded-2xl border border-white/5 hover:border-primary/30 transition-all overflow-hidden block"
             >
               {/* Thumbnail */}
-              <div className="relative overflow-hidden aspect-video bg-gray-900">
+              <div className="relative overflow-hidden aspect-[4/3] bg-gray-900">
                 <img
                   src={project.thumb}
                   alt={project.title}
@@ -116,7 +134,7 @@ export function Projects() {
                   <span className="font-serif text-4xl font-bold text-primary/20">{project.company[0]}</span>
                 </div>
                 {/* Overlay on hover */}
-                <div className={`absolute inset-0 bg-[#0d0d0d]/60 flex items-center justify-center transition-opacity duration-300 ${hoveredIdx === i ? 'opacity-100' : 'opacity-0'}`}>
+                <div className={`absolute inset-0 bg-[#0d0d0d]/70 flex items-center justify-center transition-opacity duration-300 ${hoveredIdx === i ? 'opacity-100' : 'opacity-0'}`}>
                   <div className="flex items-center gap-2 px-4 py-2 rounded-xl bg-primary text-black text-sm font-semibold">
                     <ExternalLink className="w-4 h-4" /> View on Behance
                   </div>
@@ -129,7 +147,7 @@ export function Projects() {
                 <h3 className="font-semibold text-white text-base leading-snug mb-2 group-hover:text-primary transition-colors">
                   {project.title}
                 </h3>
-                <p className="text-xs text-gray-500 leading-relaxed mb-3 line-clamp-2">
+                <p className="text-xs text-gray-500 leading-relaxed mb-4 line-clamp-2">
                   {project.description}
                 </p>
                 <div className="flex flex-wrap gap-1.5">

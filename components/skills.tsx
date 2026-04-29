@@ -1,200 +1,155 @@
 "use client"
 
-import { useEffect, useState, useRef } from "react"
+import { motion } from "framer-motion"
 
-const softwareTools = [
-  { abbr: "Ps", name: "Photoshop", color: "bg-[#31a8ff]" },
-  { abbr: "Ai", name: "Illustrator", color: "bg-[#ff9a00]" },
-  { abbr: "Id", name: "InDesign", color: "bg-[#ff3366]" },
-  { abbr: "Cd", name: "CorelDraw", color: "bg-[#6dd400]" },
-  { abbr: "Fg", name: "Figma", color: "bg-[#f24e1e]" },
-  { abbr: "Cv", name: "Canva", color: "bg-[#00c4cc]" },
-  { abbr: "Ae", name: "After Effects", color: "bg-[#9999ff]" },
-  { abbr: "Cc", name: "CapCut", color: "bg-white text-black" },
-]
-
-const digitalPrintSkills = [
-  { name: "Brand Identity", percentage: 92, color: "from-orange-400 to-cyan-400" },
-  { name: "Print Production", percentage: 88, color: "from-purple-400 to-pink-400" },
-  { name: "Infographic Design", percentage: 90, color: "from-yellow-400 to-orange-400" },
-  { name: "Email Marketing", percentage: 87, color: "from-orange-400 to-red-400" },
-  { name: "Packaging Design", percentage: 85, color: "from-cyan-400 to-green-400" },
-  { name: "UI/UX Principles", percentage: 82, color: "from-purple-400 to-blue-400" },
+const designSkills = [
+  "Brand Identity & Visual Systems",
+  "Logo Design & Style Guides",
+  "Social Media Design",
+  "UI/UX Principles",
+  "Print & Packaging Design",
+  "Infographic & Data Viz",
+  "Motion Graphics",
 ]
 
 const strategySkills = [
-  { name: "Content Strategy", percentage: 88 },
-  { name: "Digital Marketing", percentage: 85 },
-  { name: "Social Media Mgmt", percentage: 90 },
-  { name: "Project Management", percentage: 83 },
-  { name: "Visual Storytelling", percentage: 94 },
-  { name: "Client Relations", percentage: 92 },
+  "Content Strategy",
+  "Digital Marketing",
+  "Social Media Management",
+  "Visual Storytelling",
+  "Campaign Planning",
+  "Client Consultation",
+  "Project Management",
 ]
 
-function CircularProgress({ percentage, color }: { percentage: number; color: string }) {
-  const [animatedPercentage, setAnimatedPercentage] = useState(0)
-  const ref = useRef<HTMLDivElement>(null)
+const tools = [
+  { name: "Photoshop", abbr: "Ps", bg: "bg-[#001e36]", color: "text-[#31a8ff]" },
+  { name: "Illustrator", abbr: "Ai", bg: "bg-[#330000]", color: "text-[#ff9a00]" },
+  { name: "InDesign", abbr: "Id", bg: "bg-[#49021f]", color: "text-[#ff3366]" },
+  { name: "After Effects", abbr: "Ae", bg: "bg-[#1d1d3b]", color: "text-[#9999ff]" },
+  { name: "Figma", abbr: "Fg", bg: "bg-[#1a1a1a]", color: "text-white" },
+  { name: "CorelDRAW", abbr: "Cd", bg: "bg-[#1a2e00]", color: "text-[#6dd400]" },
+  { name: "Canva", abbr: "Cv", bg: "bg-[#002d2f]", color: "text-[#00c4cc]" },
+  { name: "CapCut", abbr: "Cc", bg: "bg-white", color: "text-black" },
+]
 
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          const duration = 1500
-          const steps = 60
-          const increment = percentage / steps
-          let current = 0
-
-          const timer = setInterval(() => {
-            current += increment
-            if (current >= percentage) {
-              setAnimatedPercentage(percentage)
-              clearInterval(timer)
-            } else {
-              setAnimatedPercentage(Math.floor(current))
-            }
-          }, duration / steps)
-        }
-      },
-      { threshold: 0.3 }
-    )
-
-    if (ref.current) observer.observe(ref.current)
-    return () => observer.disconnect()
-  }, [percentage])
-
-  const circumference = 2 * Math.PI * 40
-  const strokeDashoffset = circumference - (animatedPercentage / 100) * circumference
-
-  return (
-    <div ref={ref} className="relative w-20 h-20">
-      <svg className="w-full h-full -rotate-90">
-        <circle
-          cx="40"
-          cy="40"
-          r="40"
-          stroke="rgba(255,255,255,0.1)"
-          strokeWidth="4"
-          fill="none"
-        />
-        <circle
-          cx="40"
-          cy="40"
-          r="40"
-          stroke="url(#gradient)"
-          strokeWidth="4"
-          fill="none"
-          strokeLinecap="round"
-          strokeDasharray={circumference}
-          strokeDashoffset={strokeDashoffset}
-          className="transition-all duration-1000"
-        />
-        <defs>
-          <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0%" className={color.split(" ")[0].replace("from-", "stop-")} stopColor="currentColor" />
-            <stop offset="100%" className={color.split(" ")[1].replace("to-", "stop-")} stopColor="currentColor" />
-          </linearGradient>
-        </defs>
-      </svg>
-      <div className="absolute inset-0 flex items-center justify-center">
-        <span className="text-white font-medium text-sm">{animatedPercentage}%</span>
-      </div>
-    </div>
-  )
-}
-
-function ProgressBar({ percentage, index }: { percentage: number; index: number }) {
-  const [animatedWidth, setAnimatedWidth] = useState(0)
-  const ref = useRef<HTMLDivElement>(null)
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setTimeout(() => setAnimatedWidth(percentage), index * 100)
-        }
-      },
-      { threshold: 0.3 }
-    )
-
-    if (ref.current) observer.observe(ref.current)
-    return () => observer.disconnect()
-  }, [percentage, index])
-
-  return (
-    <div ref={ref} className="h-2 bg-white/10 rounded-full overflow-hidden">
-      <div 
-        className="h-full bg-gradient-to-r from-purple-400 via-pink-400 to-orange-400 rounded-full transition-all duration-1000 ease-out"
-        style={{ width: `${animatedWidth}%` }}
-      />
-    </div>
-  )
-}
+// Duplicate tools for infinite scroll effect
+const duplicatedTools = [...tools, ...tools]
 
 export function Skills() {
   return (
-    <section id="skills" className="py-24 bg-[#0d0d0d]">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <section id="skills" className="py-24 sm:py-32 bg-[#0d0d0d]">
+      <div className="max-w-7xl mx-auto px-6">
         {/* Section Header */}
-        <div className="mb-16">
-          <p className="text-primary text-sm tracking-widest uppercase mb-4">Capabilities</p>
-          <h2 className="text-4xl md:text-5xl font-serif text-white">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="mb-16"
+        >
+          <span className="text-xs text-primary tracking-widest uppercase">CAPABILITIES</span>
+          <h2 className="font-serif text-4xl sm:text-5xl font-bold mt-3 text-white">
             Skills & <span className="text-primary italic">Expertise</span>
           </h2>
-        </div>
+          <p className="text-gray-500 mt-4 max-w-xl">
+            I combine design craft with strategic thinking to help brands communicate clearly and grow intentionally.
+          </p>
+        </motion.div>
 
-        {/* Design & Brand Software */}
-        <div className="mb-12">
-          <h3 className="text-lg text-gray-400 mb-6">Design & Brand Software</h3>
-          <div className="grid grid-cols-4 sm:grid-cols-8 gap-4">
-            {softwareTools.map((tool) => (
-              <div key={tool.abbr} className="flex flex-col items-center gap-2">
-                <div className={`${tool.color} w-12 h-12 rounded-lg flex items-center justify-center font-bold text-sm shadow-lg`}>
-                  {tool.abbr}
-                </div>
-                <span className="text-gray-500 text-xs text-center">{tool.name}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Skills Grid */}
-        <div className="grid lg:grid-cols-2 gap-6">
-          {/* Digital & Print Design */}
-          <div className="bg-[#141414] rounded-2xl p-6 border border-white/5">
-            <div className="flex items-center gap-2 mb-6">
-              <span className="w-2 h-2 bg-primary rounded-full" />
-              <h3 className="text-white font-serif italic">Digital & Print Design</h3>
-            </div>
-            <div className="grid grid-cols-3 gap-6">
-              {digitalPrintSkills.map((skill) => (
-                <div key={skill.name} className="flex flex-col items-center text-center">
-                  <CircularProgress percentage={skill.percentage} color={skill.color} />
-                  <span className="text-gray-400 text-xs mt-2 leading-tight">{skill.name}</span>
-                </div>
+        {/* Three Column Layout */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-8">
+          {/* Design Column */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.1 }}
+          >
+            <h3 className="font-serif text-xl text-white mb-6">Design</h3>
+            <div className="flex flex-wrap gap-2">
+              {designSkills.map((skill) => (
+                <span
+                  key={skill}
+                  className="px-3 py-1.5 rounded-lg bg-white/5 border border-white/10 text-sm text-gray-400 hover:border-primary/30 hover:text-white transition-all"
+                >
+                  {skill}
+                </span>
               ))}
             </div>
-          </div>
+          </motion.div>
 
-          {/* Strategy & Management */}
-          <div className="bg-[#141414] rounded-2xl p-6 border border-white/5">
-            <div className="flex items-center gap-2 mb-6">
-              <span className="w-2 h-2 bg-primary rounded-full" />
-              <h3 className="text-white font-serif italic">Strategy & Management</h3>
+          {/* Strategy Column */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+          >
+            <h3 className="font-serif text-xl text-primary mb-6">Strategy</h3>
+            <div className="flex flex-wrap gap-2">
+              {strategySkills.map((skill) => (
+                <span
+                  key={skill}
+                  className="px-3 py-1.5 rounded-lg bg-white/5 border border-white/10 text-sm text-gray-400 hover:border-primary/30 hover:text-white transition-all"
+                >
+                  {skill}
+                </span>
+              ))}
             </div>
-            <div className="space-y-4">
-              {strategySkills.map((skill, index) => (
-                <div key={skill.name}>
-                  <div className="flex justify-between text-sm mb-1">
-                    <span className="text-gray-400">{skill.name}</span>
-                    <span className="text-gray-500">{skill.percentage}%</span>
+          </motion.div>
+
+          {/* Tools Column */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.3 }}
+          >
+            <h3 className="font-serif text-xl text-primary mb-2">Tools</h3>
+            <p className="text-xs text-gray-500 tracking-widest uppercase mb-6">
+              TOOLS I USE TO EXECUTE AT SCALE
+            </p>
+            
+            {/* Scrolling Tools Marquee */}
+            <div className="relative overflow-hidden">
+              <div className="flex gap-4 animate-marquee">
+                {duplicatedTools.map((tool, index) => (
+                  <div
+                    key={`${tool.abbr}-${index}`}
+                    className="flex flex-col items-center gap-2 flex-shrink-0"
+                  >
+                    <div
+                      className={`${tool.bg} ${tool.color} w-14 h-14 rounded-xl flex items-center justify-center font-bold text-lg shadow-lg`}
+                    >
+                      {tool.abbr}
+                    </div>
+                    <span className="text-gray-500 text-xs whitespace-nowrap">{tool.name}</span>
                   </div>
-                  <ProgressBar percentage={skill.percentage} index={index} />
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
-          </div>
+          </motion.div>
         </div>
       </div>
+
+      {/* CSS for marquee animation */}
+      <style jsx>{`
+        @keyframes marquee {
+          0% {
+            transform: translateX(0);
+          }
+          100% {
+            transform: translateX(-50%);
+          }
+        }
+        .animate-marquee {
+          animation: marquee 20s linear infinite;
+        }
+        .animate-marquee:hover {
+          animation-play-state: paused;
+        }
+      `}</style>
     </section>
   )
 }
