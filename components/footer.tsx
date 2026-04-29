@@ -69,9 +69,9 @@ export function Footer() {
       <div className="max-w-7xl mx-auto px-6">
         <div className="flex flex-col sm:flex-row items-center justify-between gap-6">
           <img
-            src="/logo.png"
+            src="/temi-logo-white.png"
             alt="Temitope Logo"
-            className="h-8 w-auto object-contain"
+            className="h-10 w-auto object-contain"
           />
 
           {/* Social icons */}

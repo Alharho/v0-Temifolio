@@ -35,11 +35,11 @@ export function Header() {
         <div className="flex h-16 items-center justify-between">
           <Link href="/" className="flex items-center">
             <Image
-              src="/logo.png"
+              src="/temi-logo-white.png"
               alt="Temi Logo"
-              width={80}
-              height={32}
-              className="h-8 w-auto"
+              width={100}
+              height={40}
+              className="h-10 w-auto"
               priority
             />
           </Link>
