@@ -5,18 +5,6 @@ import { motion, useInView } from "framer-motion"
 import { Button } from "@/components/ui/button"
 import { ArrowUpRight } from "lucide-react"
 
-const softwareIcons = [
-  { abbr: "Ps", name: "Photoshop", color: "bg-[#31a8ff]" },
-  { abbr: "Ai", name: "Illustrator", color: "bg-[#ff9a00]" },
-  { abbr: "Id", name: "InDesign", color: "bg-[#ff3366]" },
-  { abbr: "Ae", name: "After Effects", color: "bg-[#9999ff]" },
-  { abbr: "Pr", name: "Premiere", color: "bg-[#9999ff]" },
-  { abbr: "Cv", name: "Canva", color: "bg-[#00c4cc]" },
-  { abbr: "Cd", name: "CorelDraw", color: "bg-[#6dd400]" },
-  { abbr: "Fg", name: "Figma", color: "bg-[#f24e1e]" },
-  { abbr: "Cc", name: "CapCut", color: "bg-white text-black" },
-]
-
 const stats = [
   { value: 5, suffix: "+", label: "Years Experience", desc: "Creative design career" },
   { value: 191, suffix: "+", label: "Clients Served", desc: "Across diverse industries" },
@@ -55,29 +43,12 @@ function CountUp({ target, suffix, duration = 2000 }: { target: number; suffix: 
 export function Hero() {
   return (
     <section className="relative min-h-screen flex flex-col justify-center overflow-hidden bg-[#0d0d0d]">
-      {/* Gradient overlay at top */}
-      <div className="absolute top-0 right-0 w-1/2 h-1/2 bg-gradient-to-bl from-orange-500/20 via-orange-600/10 to-transparent blur-3xl" />
-      
-      {/* Floating Software Icons */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {softwareIcons.map((icon, index) => (
-          <motion.div
-            key={icon.abbr}
-            initial={{ opacity: 0, scale: 0.5 }}
-            animate={{ opacity: 0.6, scale: 1 }}
-            transition={{ duration: 0.5, delay: index * 0.1 }}
-            className={`absolute ${icon.color} w-10 h-10 rounded-lg flex items-center justify-center text-xs font-bold shadow-lg`}
-            style={{
-              top: `${15 + (index % 3) * 25}%`,
-              left: index < 5 ? `${5 + (index * 8)}%` : undefined,
-              right: index >= 5 ? `${5 + ((index - 5) * 8)}%` : undefined,
-              transform: `rotate(${(index - 4) * 5}deg)`,
-            }}
-          >
-            {icon.abbr}
-          </motion.div>
-        ))}
-      </div>
+      {/* Background Image */}
+      <div 
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-40"
+        style={{ backgroundImage: "url('/images/bg-bokeh.png')" }}
+      />
+      <div className="absolute inset-0 bg-gradient-to-b from-[#0d0d0d]/60 via-transparent to-[#0d0d0d]" />
       
       <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-32 text-center">
         <motion.div 
@@ -86,12 +57,6 @@ export function Hero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
         >
-          {/* Availability badge */}
-          <div className="inline-flex items-center gap-2 text-sm text-primary">
-            <span className="w-2 h-2 bg-primary rounded-full animate-pulse" />
-            Available for freelance work
-          </div>
-          
           <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl tracking-tight">
             <span className="text-white font-serif">Temitope J.</span>
             <br />
