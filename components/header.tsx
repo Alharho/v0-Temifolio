@@ -57,12 +57,12 @@ export function Header() {
             ))}
             <Button
               asChild
-              className="bg-transparent border border-white/20 text-white hover:bg-white hover:text-black transition-all rounded-full px-6"
+              className="bg-primary text-black hover:bg-primary/90 transition-all rounded-full px-6 font-medium"
             >
               <a
                 href="/cv.pdf"
               >
-                Download CV
+                ↓ Download CV
               </a>
             </Button>
           </nav>
@@ -94,12 +94,12 @@ export function Header() {
             ))}
             <Button
               asChild
-              className="bg-transparent border border-white/20 text-white hover:bg-white hover:text-black transition-all rounded-full w-full"
+              className="bg-primary text-black hover:bg-primary/90 transition-all rounded-full w-full font-medium"
             >
               <a
                 href="/cv.pdf"
               >
-                Download CV
+                ↓ Download CV
               </a>
             </Button>
           </nav>
