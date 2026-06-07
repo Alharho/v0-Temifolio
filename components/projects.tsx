@@ -71,22 +71,34 @@ export function Projects() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          viewport={{ once: true, margin: "0px 0px -100px 0px" }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
           className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-16"
         >
-          <div>
+          <motion.div
+            initial={{ opacity: 0, x: -30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, margin: "0px 0px -100px 0px" }}
+            transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
+          >
             <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-white">
               Selected work,<br />built to convert.
             </h2>
-          </div>
-          <a
+          </motion.div>
+          <motion.a
             href="https://www.behance.net/temigfx"
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-2 px-5 py-2.5 rounded-xl backdrop-blur-md bg-white/5 border border-white/10 text-sm text-gray-400 hover:text-primary hover:border-primary/30 transition-all whitespace-nowrap"
+            initial={{ opacity: 0, x: 30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, margin: "0px 0px -100px 0px" }}
+            transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
+            whileHover={{ scale: 1.05, x: 5 }}
+            whileTap={{ scale: 0.98 }}
+            className="flex items-center gap-2 px-5 py-2.5 rounded-xl backdrop-blur-md bg-white/5 border border-white/10 text-sm text-gray-400 hover:text-primary hover:border-primary/30 transition-all whitespace-nowrap cursor-pointer"
           >
             View full archive on Behance ↗
-          </a>
+          </motion.a>
         </motion.div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -96,20 +108,33 @@ export function Projects() {
               href={project.link}
               target="_blank"
               rel="noopener noreferrer"
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: i * 0.08 }}
+              viewport={{ once: true, margin: "0px 0px -100px 0px" }}
+              transition={{ 
+                duration: 0.5, 
+                delay: i * 0.12,
+                ease: "easeOut",
+                type: "spring",
+                stiffness: 100,
+                damping: 15
+              }}
               onMouseEnter={() => setHoveredIdx(i)}
               onMouseLeave={() => setHoveredIdx(null)}
-              className="group backdrop-blur-md bg-white/5 rounded-2xl border border-white/10 hover:border-primary/30 transition-all overflow-hidden block"
+              whileHover={{ 
+                y: -12,
+                boxShadow: "0 30px 60px rgba(245, 166, 35, 0.15)"
+              }}
+              className="group backdrop-blur-md bg-white/5 rounded-2xl border border-white/10 hover:border-primary/40 transition-all overflow-hidden block cursor-pointer"
             >
               {/* Thumbnail */}
               <div className="relative overflow-hidden aspect-video bg-gray-900">
-                <img
+                <motion.img
                   src={project.thumb}
                   alt={project.title}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                  className="w-full h-full object-cover"
+                  whileHover={{ scale: 1.08 }}
+                  transition={{ duration: 0.4, ease: "easeOut" }}
                   onError={(e) => {
                     const target = e.target as HTMLImageElement
                     target.style.display = 'none'
@@ -122,29 +147,57 @@ export function Projects() {
                   <span className="font-serif text-4xl font-bold text-primary/20">{project.company[0]}</span>
                 </div>
                 {/* Overlay on hover */}
-                <div className={`absolute inset-0 bg-[#0d0d0d]/60 flex items-center justify-center transition-opacity duration-300 ${hoveredIdx === i ? 'opacity-100' : 'opacity-0'}`}>
-                  <div className="flex items-center gap-2 px-4 py-2 rounded-xl bg-primary text-black text-sm font-semibold">
+                <motion.div 
+                  className="absolute inset-0 bg-[#0d0d0d]/60 flex items-center justify-center"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: hoveredIdx === i ? 1 : 0 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <motion.div 
+                    className="flex items-center gap-2 px-4 py-2 rounded-xl bg-primary text-black text-sm font-semibold shadow-lg"
+                    whileHover={{ scale: 1.05 }}
+                  >
                     <ExternalLink className="w-4 h-4" /> View on Behance
-                  </div>
-                </div>
+                  </motion.div>
+                </motion.div>
               </div>
 
               {/* Content */}
               <div className="p-5">
-                <p className="text-xs text-primary mb-1.5 tracking-wide">{project.company}</p>
+                <motion.p 
+                  className="text-xs text-primary mb-1.5 tracking-wide font-semibold"
+                  whileHover={{ letterSpacing: "0.15em" }}
+                  transition={{ duration: 0.3 }}
+                >
+                  {project.company}
+                </motion.p>
                 <h3 className="font-semibold text-white text-base leading-snug mb-2 group-hover:text-primary transition-colors">
                   {project.title}
                 </h3>
                 <p className="text-xs text-gray-500 leading-relaxed mb-3 line-clamp-2">
                   {project.description}
                 </p>
-                <div className="flex flex-wrap gap-1.5">
-                  {project.tags.map(tag => (
-                    <span key={tag} className="px-2 py-0.5 rounded-md bg-white/5 text-xs text-gray-400 border border-white/10">
+                <motion.div 
+                  className="flex flex-wrap gap-1.5"
+                  initial={{ opacity: 0 }}
+                  whileInView={{ opacity: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: i * 0.12 + 0.3 }}
+                >
+                  {project.tags.map((tag, idx) => (
+                    <motion.span 
+                      key={tag} 
+                      className="px-2 py-0.5 rounded-md bg-white/5 text-xs text-gray-400 border border-white/10 hover:border-primary/30 hover:bg-primary/10 transition-all cursor-pointer"
+                      whileHover={{ scale: 1.1, y: -2 }}
+                      initial={{ opacity: 0, scale: 0.8 }}
+                      whileInView={{ opacity: 1, scale: 1 }}
+                      viewport={{ once: true }}
+                      transition={{ delay: i * 0.12 + 0.3 + idx * 0.05 }}
+                    >
                       {tag}
-                    </span>
+                    </motion.span>
                   ))}
-                </div>
+                </motion.div>
               </div>
             </motion.a>
           ))}

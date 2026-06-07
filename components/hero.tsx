@@ -56,10 +56,13 @@ function RotatingWord() {
     <span className="text-primary italic">
       <motion.span
         key={index}
-        initial={{ opacity: 0, y: 10 }}
-        animate={{ opacity: 1, y: 0 }}
-        exit={{ opacity: 0, y: -10 }}
-        transition={{ duration: 0.5 }}
+        initial={{ opacity: 0, y: 10, scale: 0.95 }}
+        animate={{ opacity: 1, y: 0, scale: 1 }}
+        exit={{ opacity: 0, y: -10, scale: 0.95 }}
+        transition={{ 
+          duration: 0.5,
+          ease: "easeOut"
+        }}
       >
         {rotatingWords[index]}
       </motion.span>
@@ -70,46 +73,87 @@ function RotatingWord() {
 export function Hero() {
   return (
     <section className="relative min-h-screen flex flex-col justify-center overflow-hidden bg-[#0d0d0d]">
-      {/* Gradient overlay at top */}
-      <div className="absolute top-0 right-0 w-1/2 h-1/2 bg-gradient-to-bl from-orange-500/20 via-orange-600/10 to-transparent blur-3xl" />
+      {/* Animated gradient overlay at top */}
+      <motion.div 
+        className="absolute top-0 right-0 w-1/2 h-1/2 bg-gradient-to-bl from-orange-500/20 via-orange-600/10 to-transparent blur-3xl animate-float"
+        style={{
+          backgroundPosition: ['0% 50%', '100% 50%'],
+        }}
+        animate={{
+          x: [0, 30, 0],
+          y: [0, -20, 0],
+        }}
+        transition={{
+          duration: 6,
+          ease: "easeInOut",
+          repeat: Infinity,
+        }}
+      />
       
       <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-32 text-center">
         <motion.div 
           className="space-y-6"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
         >
           {/* Main headline with rotating word */}
-          <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl tracking-tight leading-tight font-serif text-white">
+          <motion.h1 
+            className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl tracking-tight leading-tight font-serif text-white"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.1, ease: "easeOut" }}
+          >
             Brands that <RotatingWord />, dominate, sell, stand out, inspire, or trend — start with design.
-          </h1>
+          </motion.h1>
           
-          <p className="mx-auto max-w-2xl text-gray-400 leading-relaxed text-lg">
+          <motion.p 
+            className="mx-auto max-w-2xl text-gray-400 leading-relaxed text-lg"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
+          >
             Temitope J. Olalere — Strategic Graphic Designer & Brand Consultant helping fintech, FMCG, education, and tech companies turn visual identity into measurable growth.
-          </p>
+          </motion.p>
           
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
-            <Button
-              asChild
-              size="lg"
-              className="bg-primary text-black hover:bg-primary/90 rounded-full px-8 font-medium"
+          <motion.div 
+            className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.3, ease: "easeOut" }}
+          >
+            <motion.div
+              whileHover={{ scale: 1.05, y: -4 }}
+              whileTap={{ scale: 0.98 }}
+              transition={{ type: "spring", stiffness: 400, damping: 10 }}
             >
-              <a href="#projects">
-                View my work →
-              </a>
-            </Button>
-            <Button
-              asChild
-              variant="outline"
-              size="lg"
-              className="border-white/20 text-white hover:bg-white/10 rounded-full px-8"
+              <Button
+                asChild
+                size="lg"
+                className="bg-primary text-black hover:bg-primary/90 rounded-full px-8 font-medium shadow-lg hover:shadow-xl transition-shadow"
+              >
+                <a href="#projects">
+                  View my work →
+                </a>
+              </Button>
+            </motion.div>
+            <motion.div
+              whileHover={{ scale: 1.05, y: -4 }}
+              whileTap={{ scale: 0.98 }}
+              transition={{ type: "spring", stiffness: 400, damping: 10 }}
             >
-              <a href="#contact">
-                Start a project →
-              </a>
-            </Button>
-          </div>
+              <Button
+                asChild
+                variant="outline"
+                size="lg"
+                className="border-white/20 text-white hover:bg-white/10 rounded-full px-8"
+              >
+                <a href="#contact">
+                  Start a project →
+                </a>
+              </Button>
+            </motion.div>
+          </motion.div>
         </motion.div>
       </div>
       
@@ -120,32 +164,76 @@ export function Hero() {
             {stats.map((stat, i) => (
               <motion.div
                 key={stat.label}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: i * 0.1 }}
-                className="backdrop-blur-md bg-white/5 rounded-2xl p-6 border border-white/10 text-center group hover:border-primary/30 transition-all"
+                initial={{ opacity: 0, y: 30, scale: 0.9 }}
+                whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                viewport={{ once: true, margin: "0px 0px -100px 0px" }}
+                transition={{ 
+                  duration: 0.6, 
+                  delay: i * 0.12,
+                  ease: "easeOut",
+                  type: "spring",
+                  stiffness: 100,
+                  damping: 15
+                }}
+                whileHover={{ 
+                  y: -8,
+                  boxShadow: "0 20px 40px rgba(245, 166, 35, 0.2)"
+                }}
+                className="backdrop-blur-md bg-white/5 rounded-2xl p-6 border border-white/10 text-center group hover:border-primary/50 transition-all cursor-pointer"
               >
-                <div className="font-serif text-3xl sm:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-primary to-orange-300 mb-1">
+                <motion.div 
+                  className="font-serif text-3xl sm:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-primary to-orange-300 mb-1"
+                  initial={{ opacity: 0 }}
+                  whileInView={{ opacity: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: i * 0.12 + 0.3 }}
+                >
                   <CountUp target={stat.value} suffix={stat.suffix} />
-                </div>
-                <div className="font-semibold text-white text-sm mb-1">{stat.label}</div>
-                <div className="text-xs text-gray-500">{stat.desc}</div>
+                </motion.div>
+                <motion.div 
+                  className="font-semibold text-white text-sm mb-1"
+                  initial={{ opacity: 0 }}
+                  whileInView={{ opacity: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: i * 0.12 + 0.4 }}
+                >
+                  {stat.label}
+                </motion.div>
+                <motion.div 
+                  className="text-xs text-gray-500"
+                  initial={{ opacity: 0 }}
+                  whileInView={{ opacity: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: i * 0.12 + 0.5 }}
+                >
+                  {stat.desc}
+                </motion.div>
               </motion.div>
             ))}
           </div>
         </div>
       </div>
 
-      {/* Scroll to work link */}
-      <div className="relative z-10 flex justify-center pb-8">
-        <a 
+      {/* Scroll to work link with pulse animation */}
+      <motion.div 
+        className="relative z-10 flex justify-center pb-8"
+        animate={{ y: [0, 8, 0] }}
+        transition={{ duration: 2, repeat: Infinity }}
+      >
+        <motion.a 
           href="#projects"
-          className="text-sm text-gray-400 hover:text-primary transition-colors"
+          className="text-sm text-gray-400 hover:text-primary transition-colors flex items-center gap-2"
+          whileHover={{ gap: "12px" }}
         >
           Scroll to work
-        </a>
-      </div>
+          <motion.span
+            animate={{ y: [0, 4, 0] }}
+            transition={{ duration: 1.5, repeat: Infinity }}
+          >
+            ↓
+          </motion.span>
+        </motion.a>
+      </motion.div>
     </section>
   )
 }
