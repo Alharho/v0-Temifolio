@@ -7,10 +7,10 @@ import { Menu, X } from "lucide-react"
 import { Button } from "@/components/ui/button"
 
 const navLinks = [
-  { href: "#about", label: "About" },
-  { href: "#skills", label: "Skills" },
-  { href: "#experience", label: "Experience" },
-  { href: "#projects", label: "Projects" },
+  { href: "#about", label: "Home" },
+  { href: "#skills", label: "Projects" },
+  { href: "#experience", label: "About" },
+  { href: "#contact", label: "Contact" },
 ]
 
 export function Header() {
@@ -60,11 +60,9 @@ export function Header() {
               className="bg-transparent border border-white/20 text-white hover:bg-white hover:text-black transition-all rounded-full px-6"
             >
               <a
-                href="https://www.behance.net/temigfx"
-                target="_blank"
-                rel="noopener noreferrer"
+                href="/cv.pdf"
               >
-                Hire Me
+                Download CV
               </a>
             </Button>
           </nav>
@@ -99,11 +97,9 @@ export function Header() {
               className="bg-transparent border border-white/20 text-white hover:bg-white hover:text-black transition-all rounded-full w-full"
             >
               <a
-                href="https://www.behance.net/temigfx"
-                target="_blank"
-                rel="noopener noreferrer"
+                href="/cv.pdf"
               >
-                Hire Me
+                Download CV
               </a>
             </Button>
           </nav>

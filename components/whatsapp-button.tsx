@@ -10,7 +10,7 @@ function WhatsAppButtonInner({ service = "General Inquiry" }: { service?: string
   const source = searchParams.get("source") || "Website"
 
   const buildMessage = () => {
-    return `Hello Temi, I just checked your portfolio, and I'm interested in your ${service} service.
+    return `Hello Temi, I just checked your portfolio, and I'm interested in your ${service} service.`
   }
 
   const handleClick = () => {

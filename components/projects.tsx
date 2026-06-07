@@ -59,8 +59,15 @@ export function Projects() {
   const [hoveredIdx, setHoveredIdx] = useState<number | null>(null)
 
   return (
-    <section id="projects" className="relative py-24 sm:py-32">
+    <section id="projects" className="relative py-24 sm:py-32 bg-[#0d0d0d]">
       <div className="max-w-7xl mx-auto px-6">
+        {/* Section header */}
+        <div className="mb-12">
+          <p className="text-xs sm:text-sm text-gray-500 tracking-widest uppercase mb-2">
+            Featured projects · 2019 — 2026
+          </p>
+        </div>
+
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -68,18 +75,17 @@ export function Projects() {
           className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-16"
         >
           <div>
-            <span className="text-xs text-primary tracking-widest uppercase">Work</span>
-            <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold mt-3 text-white">
-              Featured <span className="text-primary italic">Projects</span>
+            <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-white">
+              Selected work,<br />built to convert.
             </h2>
           </div>
           <a
             href="https://www.behance.net/temigfx"
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-2 px-5 py-2.5 rounded-xl backdrop-blur-md bg-white/5 border border-white/10 text-sm text-gray-400 hover:text-primary hover:border-primary/30 transition-all"
+            className="flex items-center gap-2 px-5 py-2.5 rounded-xl backdrop-blur-md bg-white/5 border border-white/10 text-sm text-gray-400 hover:text-primary hover:border-primary/30 transition-all whitespace-nowrap"
           >
-            Full Portfolio on Behance <ArrowUpRight className="w-4 h-4" />
+            View full archive on Behance ↗
           </a>
         </motion.div>
 
