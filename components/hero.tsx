@@ -66,7 +66,7 @@ export function Hero() {
       <motion.div 
         className="pointer-events-none fixed inset-0 z-0"
         style={{
-          background: `radial-gradient(600px at ${mousePosition.x}px ${mousePosition.y}px, rgba(255, 140, 0, 0.08), transparent 80%)`
+          background: `radial-gradient(200px at ${mousePosition.x}px ${mousePosition.y}px, rgba(255, 140, 0, 0.04), transparent 70%)`
         }}
       />
 
@@ -205,7 +205,7 @@ export function Hero() {
 
       {/* Scroll indicator */}
       <motion.div 
-        className="absolute right-8 bottom-20 z-20 flex flex-col items-center gap-2"
+        className="absolute bottom-20 left-1/2 transform -translate-x-1/2 z-20 flex flex-col items-center gap-2"
         animate={{ y: [0, 8, 0] }}
         transition={{ duration: 2, repeat: Infinity }}
       >
