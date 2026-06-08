@@ -286,3 +286,23 @@ html {
   animation: marquee 30s linear infinite reverse;
   will-change: transform;
 }
+
+/* Embla Carousel */
+.embla {
+  overflow: hidden;
+}
+
+.embla__container {
+  display: flex;
+  touch-action: pan-y pinch-zoom;
+}
+
+.embla__slide {
+  flex: 0 0 auto;
+}
+
+/* High performance GPU acceleration */
+.gpu-accelerated {
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+}

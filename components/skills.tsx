@@ -2,11 +2,12 @@
 
 import { useEffect, useState, useRef } from "react"
 import { motion } from "framer-motion"
+import useEmblaCarousel from "embla-carousel-react"
+import AutoScroll from "embla-carousel-autoplay"
 import {
   Palette,
   Pen,
   FileText,
-  Leaf,
   Square,
   Zap,
   Clapperboard,
@@ -39,6 +40,56 @@ const expertiseAreas = [
   { title: "Content Creation", items: ["Infographics", "Illustrations", "Photography Direction", "Art Direction"] },
   { title: "Print & Packaging", items: ["Packaging Design", "Print Collateral", "Brochures", "Signage"] },
 ]
+
+function ToolsCarousel({ tools }: { tools: typeof softwareTools }) {
+  const [emblaRef, emblaApi] = useEmblaCarousel(
+    {
+      loop: true,
+      align: "center",
+      skipSnaps: false,
+    },
+    [
+      AutoScroll({
+        playOnInit: true,
+        speed: 1,
+        stopOnInteraction: false,
+        stopOnMouseEnter: false,
+      })
+    ]
+  )
+
+  return (
+    <div className="overflow-hidden rounded-2xl backdrop-blur-sm bg-white/5 border border-white/10 p-8">
+      <div className="embla" ref={emblaRef}>
+        <div className="embla__container flex gap-6">
+          {tools.map((tool) => {
+            const Icon = tool.icon
+            return (
+              <div key={tool.name} className="embla__slide flex-shrink-0 min-w-0 basis-1/2 sm:basis-1/3 lg:basis-1/4 2xl:basis-1/5">
+                <motion.div
+                  whileHover={{ y: -8, boxShadow: "0 30px 50px rgba(245, 166, 35, 0.25)" }}
+                  className="group h-full"
+                >
+                  <div className={`bg-gradient-to-br ${tool.color} rounded-xl p-8 shadow-lg hover:shadow-2xl transition-all cursor-pointer backdrop-blur-sm border border-white/20 hover:border-white/50 h-full flex flex-col items-center justify-center`}>
+                    <motion.div
+                      whileHover={{ scale: 1.15, rotate: 8 }}
+                      transition={{ type: "spring", stiffness: 300 }}
+                      className="mb-4"
+                    >
+                      <Icon className="w-12 h-12 text-white drop-shadow-lg" />
+                    </motion.div>
+                    <p className="text-sm font-bold text-white text-center mb-1">{tool.name}</p>
+                    <p className="text-xs text-white/70 text-center">{tool.label}</p>
+                  </div>
+                </motion.div>
+              </div>
+            )
+          })}
+        </div>
+      </div>
+    </div>
+  )
+}
 
 function ToolCard({ tool, index }: { tool: typeof softwareTools[0]; index: number }) {
   const Icon = tool.icon
@@ -243,7 +294,7 @@ export function Skills() {
           </motion.h2>
         </motion.div>
 
-        {/* TIER 1: Software Tools Marquee */}
+        {/* TIER 1: Software Tools Carousel */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -252,11 +303,7 @@ export function Skills() {
           className="mb-24"
         >
           <p className="text-xs text-gray-500 tracking-widest uppercase mb-6 text-center">Professional Tools I Use Daily</p>
-          <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-3 sm:gap-4">
-            {softwareTools.map((tool, idx) => (
-              <ToolCard key={tool.abbr} tool={tool} index={idx} />
-            ))}
-          </div>
+          <ToolsCarousel tools={softwareTools} />
         </motion.div>
 
         {/* TIER 2: Core Competencies */}
