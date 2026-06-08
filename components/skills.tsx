@@ -1,199 +1,283 @@
 "use client"
 
 import { useEffect, useState, useRef } from "react"
+import { motion } from "framer-motion"
 
 const softwareTools = [
-  { abbr: "Ps", name: "Photoshop", color: "bg-[#31a8ff]" },
-  { abbr: "Ai", name: "Illustrator", color: "bg-[#ff9a00]" },
-  { abbr: "Id", name: "InDesign", color: "bg-[#ff3366]" },
-  { abbr: "Cd", name: "CorelDraw", color: "bg-[#6dd400]" },
-  { abbr: "Fg", name: "Figma", color: "bg-[#f24e1e]" },
-  { abbr: "Cv", name: "Canva", color: "bg-[#00c4cc]" },
-  { abbr: "Ae", name: "After Effects", color: "bg-[#9999ff]" },
-  { abbr: "Cc", name: "CapCut", color: "bg-white text-black" },
+  { abbr: "Ps", name: "Photoshop", color: "from-[#31a8ff] to-[#1e5f9e]" },
+  { abbr: "Ai", name: "Illustrator", color: "from-[#ff9a00] to-[#cc7700]" },
+  { abbr: "Id", name: "InDesign", color: "from-[#ff3366] to-[#cc1a4d]" },
+  { abbr: "Cd", name: "CorelDraw", color: "from-[#6dd400] to-[#54aa00]" },
+  { abbr: "Fg", name: "Figma", color: "from-[#f24e1e] to-[#c23a0f]" },
+  { abbr: "Cv", name: "Canva", color: "from-[#00c4cc] to-[#0099a1]" },
+  { abbr: "Ae", name: "After Effects", color: "from-[#9999ff] to-[#6666cc]" },
+  { abbr: "Cc", name: "CapCut", color: "from-white to-gray-300" },
 ]
 
-const digitalPrintSkills = [
-  { name: "Brand Identity", percentage: 92, color: "from-orange-400 to-cyan-400" },
-  { name: "Print Production", percentage: 88, color: "from-purple-400 to-pink-400" },
-  { name: "Infographic Design", percentage: 90, color: "from-yellow-400 to-orange-400" },
-  { name: "Email Marketing", percentage: 87, color: "from-orange-400 to-red-400" },
-  { name: "Packaging Design", percentage: 85, color: "from-cyan-400 to-green-400" },
-  { name: "UI/UX Principles", percentage: 82, color: "from-purple-400 to-blue-400" },
+const coreSkills = [
+  { name: "Brand Identity", level: 95 },
+  { name: "Visual Design", level: 93 },
+  { name: "Print Design", level: 90 },
+  { name: "Digital Design", level: 94 },
+  { name: "UX/UI Design", level: 88 },
+  { name: "Motion Graphics", level: 85 },
 ]
 
-const strategySkills = [
-  { name: "Content Strategy", percentage: 88 },
-  { name: "Digital Marketing", percentage: 85 },
-  { name: "Social Media Mgmt", percentage: 90 },
-  { name: "Project Management", percentage: 83 },
-  { name: "Visual Storytelling", percentage: 94 },
-  { name: "Client Relations", percentage: 92 },
+const expertiseAreas = [
+  { title: "Brand Strategy", items: ["Logo Design", "Brand Guidelines", "Identity Systems", "Market Positioning"] },
+  { title: "Digital Marketing", items: ["Social Media Assets", "Email Templates", "Web Graphics", "Ad Campaigns"] },
+  { title: "Content Creation", items: ["Infographics", "Illustrations", "Photography Direction", "Art Direction"] },
+  { title: "Print & Packaging", items: ["Packaging Design", "Print Collateral", "Brochures", "Signage"] },
 ]
 
-function CircularProgress({ percentage, color }: { percentage: number; color: string }) {
-  const [animatedPercentage, setAnimatedPercentage] = useState(0)
-  const ref = useRef<HTMLDivElement>(null)
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          const duration = 1500
-          const steps = 60
-          const increment = percentage / steps
-          let current = 0
-
-          const timer = setInterval(() => {
-            current += increment
-            if (current >= percentage) {
-              setAnimatedPercentage(percentage)
-              clearInterval(timer)
-            } else {
-              setAnimatedPercentage(Math.floor(current))
-            }
-          }, duration / steps)
-        }
-      },
-      { threshold: 0.3 }
-    )
-
-    if (ref.current) observer.observe(ref.current)
-    return () => observer.disconnect()
-  }, [percentage])
-
-  const circumference = 2 * Math.PI * 40
-  const strokeDashoffset = circumference - (animatedPercentage / 100) * circumference
-
+function ToolCard({ tool, index }: { tool: typeof softwareTools[0]; index: number }) {
   return (
-    <div ref={ref} className="relative w-20 h-20">
-      <svg className="w-full h-full -rotate-90">
-        <circle
-          cx="40"
-          cy="40"
-          r="40"
-          stroke="rgba(255,255,255,0.1)"
-          strokeWidth="4"
-          fill="none"
-        />
-        <circle
-          cx="40"
-          cy="40"
-          r="40"
-          stroke="url(#gradient)"
-          strokeWidth="4"
-          fill="none"
-          strokeLinecap="round"
-          strokeDasharray={circumference}
-          strokeDashoffset={strokeDashoffset}
-          className="transition-all duration-1000"
-        />
-        <defs>
-          <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0%" className={color.split(" ")[0].replace("from-", "stop-")} stopColor="currentColor" />
-            <stop offset="100%" className={color.split(" ")[1].replace("to-", "stop-")} stopColor="currentColor" />
-          </linearGradient>
-        </defs>
-      </svg>
-      <div className="absolute inset-0 flex items-center justify-center">
-        <span className="text-white font-medium text-sm">{animatedPercentage}%</span>
+    <motion.div
+      initial={{ opacity: 0, y: 20, scale: 0.8 }}
+      whileInView={{ opacity: 1, y: 0, scale: 1 }}
+      viewport={{ once: true, margin: "0px 0px -50px 0px" }}
+      transition={{
+        duration: 0.4,
+        delay: index * 0.05,
+        type: "spring",
+        stiffness: 150,
+        damping: 12
+      }}
+      whileHover={{
+        y: -8,
+        boxShadow: "0 20px 40px rgba(245, 166, 35, 0.2)"
+      }}
+      className="group"
+    >
+      <div className={`bg-gradient-to-br ${tool.color} rounded-xl p-4 shadow-lg hover:shadow-xl transition-all cursor-pointer backdrop-blur-sm border border-white/20 hover:border-white/40`}>
+        <div className="h-12 flex items-center justify-center mb-3">
+          <span className="text-sm font-bold text-white group-hover:scale-110 transition-transform">
+            {tool.abbr}
+          </span>
+        </div>
+        <p className="text-xs text-white/80 text-center font-medium">{tool.name}</p>
       </div>
-    </div>
+    </motion.div>
   )
 }
 
-function ProgressBar({ percentage, index }: { percentage: number; index: number }) {
-  const [animatedWidth, setAnimatedWidth] = useState(0)
+function SkillBar({ skill, index }: { skill: typeof coreSkills[0]; index: number }) {
+  const [width, setWidth] = useState(0)
   const ref = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setTimeout(() => setAnimatedWidth(percentage), index * 100)
-        }
-      },
-      { threshold: 0.3 }
-    )
-
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => setWidth(skill.level), index * 50)
+      }
+    }, { threshold: 0.1 })
     if (ref.current) observer.observe(ref.current)
     return () => observer.disconnect()
-  }, [percentage, index])
+  }, [skill.level, index])
 
   return (
-    <div ref={ref} className="h-2 bg-white/10 rounded-full overflow-hidden">
-      <div 
-        className="h-full bg-gradient-to-r from-purple-400 via-pink-400 to-orange-400 rounded-full transition-all duration-1000 ease-out"
-        style={{ width: `${animatedWidth}%` }}
-      />
-    </div>
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, x: -20 }}
+      whileInView={{ opacity: 1, x: 0 }}
+      viewport={{ once: true, margin: "0px 0px -50px 0px" }}
+      transition={{ duration: 0.5, delay: index * 0.05 }}
+      className="space-y-2"
+    >
+      <div className="flex justify-between items-center">
+        <span className="text-sm font-medium text-gray-300">{skill.name}</span>
+        <motion.span
+          initial={{ opacity: 0 }}
+          animate={{ opacity: width > 0 ? 1 : 0 }}
+          className="text-xs font-semibold text-orange-400"
+        >
+          {width}%
+        </motion.span>
+      </div>
+      <div className="h-2 bg-white/5 rounded-full overflow-hidden border border-white/10">
+        <motion.div
+          initial={{ width: 0 }}
+          animate={{ width: `${width}%` }}
+          transition={{ duration: 1.2, ease: "easeOut" }}
+          className="h-full bg-gradient-to-r from-orange-400 via-orange-500 to-amber-500 rounded-full shadow-lg shadow-orange-500/50"
+        />
+      </div>
+    </motion.div>
+  )
+}
+
+function ExpertiseCard({ expertise, index }: { expertise: typeof expertiseAreas[0]; index: number }) {
+  const [isExpanded, setIsExpanded] = useState(false)
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20, scale: 0.95 }}
+      whileInView={{ opacity: 1, y: 0, scale: 1 }}
+      viewport={{ once: true, margin: "0px 0px -50px 0px" }}
+      transition={{
+        duration: 0.5,
+        delay: index * 0.08,
+        type: "spring",
+        stiffness: 100,
+        damping: 15
+      }}
+      onMouseEnter={() => setIsExpanded(true)}
+      onMouseLeave={() => setIsExpanded(false)}
+      whileHover={{
+        y: -8,
+        boxShadow: "0 20px 50px rgba(245, 166, 35, 0.15)"
+      }}
+      className="relative overflow-hidden"
+    >
+      <div className="backdrop-blur-sm bg-gradient-to-br from-white/8 to-white/3 rounded-2xl p-6 border border-white/15 hover:border-orange-500/40 transition-all cursor-pointer h-full">
+        {/* Background gradient animation */}
+        <motion.div
+          className="absolute inset-0 bg-gradient-to-br from-orange-500/0 to-orange-500/0"
+          animate={isExpanded ? {
+            background: "linear-gradient(135deg, rgba(245,166,35,0.1) 0%, rgba(245,166,35,0.05) 100%)"
+          } : {
+            background: "linear-gradient(135deg, rgba(245,166,35,0) 0%, rgba(245,166,35,0) 100%)"
+          }}
+          transition={{ duration: 0.3 }}
+        />
+
+        <div className="relative z-10 space-y-4">
+          <motion.h3
+            className="text-lg font-semibold text-white flex items-center gap-2"
+            animate={isExpanded ? { x: 4 } : { x: 0 }}
+          >
+            {expertise.title}
+            <motion.span
+              animate={isExpanded ? { rotate: 180, scale: 1.1 } : { rotate: 0, scale: 1 }}
+              transition={{ duration: 0.3 }}
+              className="text-orange-400 ml-auto"
+            >
+              →
+            </motion.span>
+          </motion.h3>
+
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={isExpanded ? { opacity: 1, height: "auto" } : { opacity: 0, height: 0 }}
+            transition={{ duration: 0.3 }}
+            className="overflow-hidden"
+          >
+            <div className="space-y-2 pt-4 border-t border-white/10">
+              {expertise.items.map((item, idx) => (
+                <motion.div
+                  key={item}
+                  initial={{ opacity: 0, x: -10 }}
+                  animate={isExpanded ? { opacity: 1, x: 0 } : { opacity: 0, x: -10 }}
+                  transition={{ delay: idx * 0.05 }}
+                  className="flex items-center gap-2 text-sm text-gray-400"
+                >
+                  <span className="w-1.5 h-1.5 rounded-full bg-orange-400" />
+                  {item}
+                </motion.div>
+              ))}
+            </div>
+          </motion.div>
+        </div>
+      </div>
+    </motion.div>
   )
 }
 
 export function Skills() {
   return (
-    <section id="skills" className="py-24 bg-[#0d0d0d]">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        {/* Section Header */}
-        <div className="mb-16">
-          <p className="text-primary text-sm tracking-widest uppercase mb-4">Capabilities</p>
-          <h2 className="text-4xl md:text-5xl font-serif text-white">
-            Skills & <span className="text-primary italic">Expertise</span>
-          </h2>
-        </div>
+    <section id="skills" className="relative py-32 bg-[#0d0d0d] overflow-hidden">
+      {/* Background gradient */}
+      <motion.div
+        className="absolute inset-0 opacity-30"
+        style={{
+          background: "radial-gradient(ellipse at center, rgba(245,166,35,0.1) 0%, transparent 70%)"
+        }}
+      />
 
-        {/* Design & Brand Software */}
-        <div className="mb-12">
-          <h3 className="text-lg text-gray-400 mb-6">Design & Brand Software</h3>
-          <div className="grid grid-cols-4 sm:grid-cols-8 gap-4">
-            {softwareTools.map((tool) => (
-              <div key={tool.abbr} className="flex flex-col items-center gap-2">
-                <div className={`${tool.color} w-12 h-12 rounded-lg flex items-center justify-center font-bold text-sm shadow-lg`}>
-                  {tool.abbr}
-                </div>
-                <span className="text-gray-500 text-xs text-center">{tool.name}</span>
-              </div>
+      <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        {/* Section Header */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "0px 0px -50px 0px" }}
+          transition={{ duration: 0.6 }}
+          className="mb-20 text-center"
+        >
+          <motion.p
+            className="text-orange-400 text-sm font-semibold tracking-widest uppercase mb-4"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.1 }}
+          >
+            Expertise & Tools
+          </motion.p>
+          <motion.h2
+            className="text-4xl md:text-5xl lg:text-6xl font-serif font-bold text-white max-w-3xl mx-auto"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "0px 0px -50px 0px" }}
+            transition={{ duration: 0.6, delay: 0.1 }}
+          >
+            Mastering Design Across
+            <br />
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-amber-500">
+              Multiple Platforms
+            </span>
+          </motion.h2>
+        </motion.div>
+
+        {/* TIER 1: Software Tools Marquee */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "0px 0px -50px 0px" }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+          className="mb-24"
+        >
+          <p className="text-xs text-gray-500 tracking-widest uppercase mb-6 text-center">Professional Tools I Use Daily</p>
+          <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-3 sm:gap-4">
+            {softwareTools.map((tool, idx) => (
+              <ToolCard key={tool.abbr} tool={tool} index={idx} />
             ))}
           </div>
-        </div>
+        </motion.div>
 
-        {/* Skills Grid */}
-        <div className="grid lg:grid-cols-2 gap-6">
-          {/* Digital & Print Design */}
-          <div className="bg-[#141414] rounded-2xl p-6 border border-white/5">
-            <div className="flex items-center gap-2 mb-6">
-              <span className="w-2 h-2 bg-primary rounded-full" />
-              <h3 className="text-white font-serif italic">Digital & Print Design</h3>
-            </div>
-            <div className="grid grid-cols-3 gap-6">
-              {digitalPrintSkills.map((skill) => (
-                <div key={skill.name} className="flex flex-col items-center text-center">
-                  <CircularProgress percentage={skill.percentage} color={skill.color} />
-                  <span className="text-gray-400 text-xs mt-2 leading-tight">{skill.name}</span>
-                </div>
+        {/* TIER 2: Core Competencies */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "0px 0px -50px 0px" }}
+          transition={{ duration: 0.6, delay: 0.3 }}
+          className="mb-24"
+        >
+          <div className="backdrop-blur-sm bg-white/5 rounded-2xl p-8 sm:p-10 border border-white/10">
+            <h3 className="text-2xl font-serif font-bold text-white mb-10">Core Competencies</h3>
+            <div className="grid md:grid-cols-2 gap-8">
+              {coreSkills.map((skill, idx) => (
+                <SkillBar key={skill.name} skill={skill} index={idx} />
               ))}
             </div>
           </div>
+        </motion.div>
 
-          {/* Strategy & Management */}
-          <div className="bg-[#141414] rounded-2xl p-6 border border-white/5">
-            <div className="flex items-center gap-2 mb-6">
-              <span className="w-2 h-2 bg-primary rounded-full" />
-              <h3 className="text-white font-serif italic">Strategy & Management</h3>
-            </div>
-            <div className="space-y-4">
-              {strategySkills.map((skill, index) => (
-                <div key={skill.name}>
-                  <div className="flex justify-between text-sm mb-1">
-                    <span className="text-gray-400">{skill.name}</span>
-                    <span className="text-gray-500">{skill.percentage}%</span>
-                  </div>
-                  <ProgressBar percentage={skill.percentage} index={index} />
-                </div>
-              ))}
-            </div>
+        {/* TIER 3: Expertise Areas */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "0px 0px -50px 0px" }}
+          transition={{ duration: 0.6, delay: 0.4 }}
+        >
+          <div className="mb-6">
+            <h3 className="text-2xl font-serif font-bold text-white mb-6">Areas of Expertise</h3>
+            <p className="text-gray-400 text-sm">Hover to explore detailed skills in each area</p>
           </div>
-        </div>
+          <div className="grid md:grid-cols-2 gap-6">
+            {expertiseAreas.map((area, idx) => (
+              <ExpertiseCard key={area.title} expertise={area} index={idx} />
+            ))}
+          </div>
+        </motion.div>
       </div>
     </section>
   )

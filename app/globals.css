@@ -271,8 +271,18 @@ html {
   scroll-behavior: smooth;
 }
 
-/* High performance GPU acceleration */
-.gpu-accelerated {
-  transform: translate3d(0, 0, 0);
-  backface-visibility: hidden;
+/* Marquee animation for scrolling text */
+@keyframes marquee {
+  0% { transform: translateX(100%); }
+  100% { transform: translateX(-100%); }
+}
+
+.animate-marquee {
+  animation: marquee 30s linear infinite;
+  will-change: transform;
+}
+
+.animate-marquee-reverse {
+  animation: marquee 30s linear infinite reverse;
+  will-change: transform;
 }
