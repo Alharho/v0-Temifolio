@@ -202,28 +202,6 @@ export function Hero() {
           ))}
         </div>
       </motion.div>
-
-      {/* Scroll indicator - standalone at bottom */}
-      <motion.div 
-        className="absolute bottom-6 left-1/2 transform -translate-x-1/2 z-20 flex flex-col items-center gap-3"
-        animate={{ y: [0, 8, 0] }}
-        transition={{ duration: 2, repeat: Infinity }}
-      >
-        <div className="w-6 h-10 border-2 border-orange-400 rounded-full flex items-start justify-center p-2">
-          <motion.div
-            className="w-1 h-2 bg-orange-400 rounded-full"
-            animate={{ y: [0, 8, 0] }}
-            transition={{ duration: 1.5, repeat: Infinity }}
-          />
-        </div>
-        <motion.span 
-          className="text-orange-400 text-xs font-medium whitespace-nowrap"
-          animate={{ opacity: [0.5, 1, 0.5] }}
-          transition={{ duration: 2, repeat: Infinity }}
-        >
-          Scroll
-        </motion.span>
-      </motion.div>
     </section>
   )
 }
