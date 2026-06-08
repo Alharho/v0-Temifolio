@@ -2,16 +2,26 @@
 
 import { useEffect, useState, useRef } from "react"
 import { motion } from "framer-motion"
+import {
+  Palette,
+  Pen,
+  FileText,
+  Leaf,
+  Square,
+  Zap,
+  Clapperboard,
+  Music,
+} from "lucide-react"
 
 const softwareTools = [
-  { abbr: "Ps", name: "Photoshop", color: "from-[#31a8ff] to-[#1e5f9e]" },
-  { abbr: "Ai", name: "Illustrator", color: "from-[#ff9a00] to-[#cc7700]" },
-  { abbr: "Id", name: "InDesign", color: "from-[#ff3366] to-[#cc1a4d]" },
-  { abbr: "Cd", name: "CorelDraw", color: "from-[#6dd400] to-[#54aa00]" },
-  { abbr: "Fg", name: "Figma", color: "from-[#f24e1e] to-[#c23a0f]" },
-  { abbr: "Cv", name: "Canva", color: "from-[#00c4cc] to-[#0099a1]" },
-  { abbr: "Ae", name: "After Effects", color: "from-[#9999ff] to-[#6666cc]" },
-  { abbr: "Cc", name: "CapCut", color: "from-white to-gray-300" },
+  { name: "Photoshop", icon: Palette, color: "from-[#31a8ff] to-[#1e5f9e]", label: "Photo Editing" },
+  { name: "Illustrator", icon: Pen, color: "from-[#ff9a00] to-[#cc7700]", label: "Vector Design" },
+  { name: "InDesign", icon: FileText, color: "from-[#ff3366] to-[#cc1a4d]", label: "Layout Design" },
+  { name: "CorelDraw", icon: Square, color: "from-[#6dd400] to-[#54aa00]", label: "Graphics" },
+  { name: "Figma", icon: Zap, color: "from-[#f24e1e] to-[#c23a0f]", label: "UI Design" },
+  { name: "Canva", icon: Palette, color: "from-[#00c4cc] to-[#0099a1]", label: "Design Tool" },
+  { name: "After Effects", icon: Clapperboard, color: "from-[#9999ff] to-[#6666cc]", label: "Motion" },
+  { name: "CapCut", icon: Music, color: "from-white/80 to-gray-300", label: "Video Edit" },
 ]
 
 const coreSkills = [
@@ -31,6 +41,8 @@ const expertiseAreas = [
 ]
 
 function ToolCard({ tool, index }: { tool: typeof softwareTools[0]; index: number }) {
+  const Icon = tool.icon
+  
   return (
     <motion.div
       initial={{ opacity: 0, y: 20, scale: 0.8 }}
@@ -44,18 +56,22 @@ function ToolCard({ tool, index }: { tool: typeof softwareTools[0]; index: numbe
         damping: 12
       }}
       whileHover={{
-        y: -8,
-        boxShadow: "0 20px 40px rgba(245, 166, 35, 0.2)"
+        y: -12,
+        boxShadow: "0 30px 50px rgba(245, 166, 35, 0.25)"
       }}
       className="group"
     >
-      <div className={`bg-gradient-to-br ${tool.color} rounded-xl p-4 shadow-lg hover:shadow-xl transition-all cursor-pointer backdrop-blur-sm border border-white/20 hover:border-white/40`}>
-        <div className="h-12 flex items-center justify-center mb-3">
-          <span className="text-sm font-bold text-white group-hover:scale-110 transition-transform">
-            {tool.abbr}
-          </span>
+      <div className={`bg-gradient-to-br ${tool.color} rounded-xl p-6 shadow-lg hover:shadow-2xl transition-all cursor-pointer backdrop-blur-sm border border-white/20 hover:border-white/50`}>
+        <div className="h-16 flex items-center justify-center mb-3">
+          <motion.div
+            whileHover={{ scale: 1.15, rotate: 8 }}
+            transition={{ type: "spring", stiffness: 300 }}
+          >
+            <Icon className="w-10 h-10 text-white drop-shadow-lg" />
+          </motion.div>
         </div>
-        <p className="text-xs text-white/80 text-center font-medium">{tool.name}</p>
+        <p className="text-sm font-bold text-white text-center mb-1">{tool.name}</p>
+        <p className="text-xs text-white/70 text-center">{tool.label}</p>
       </div>
     </motion.div>
   )

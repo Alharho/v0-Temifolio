@@ -49,8 +49,27 @@ function CountUp({ target, suffix, duration = 2000 }: { target: number; suffix: 
 }
 
 export function Hero() {
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
+
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      setMousePosition({ x: e.clientX, y: e.clientY })
+    }
+    
+    window.addEventListener("mousemove", handleMouseMove)
+    return () => window.removeEventListener("mousemove", handleMouseMove)
+  }, [])
+
   return (
     <section className="relative min-h-screen flex flex-col justify-center overflow-hidden bg-[#0d0d0d]">
+      {/* Mouse blur effect background */}
+      <motion.div 
+        className="pointer-events-none fixed inset-0 z-0"
+        style={{
+          background: `radial-gradient(600px at ${mousePosition.x}px ${mousePosition.y}px, rgba(255, 140, 0, 0.08), transparent 80%)`
+        }}
+      />
+
       {/* Animated gradient orbs */}
       <motion.div 
         className="absolute top-20 right-10 w-96 h-96 bg-gradient-to-br from-orange-500/15 to-transparent rounded-full blur-3xl"
@@ -186,16 +205,24 @@ export function Hero() {
 
       {/* Scroll indicator */}
       <motion.div 
-        className="relative z-10 flex justify-center pb-4"
-        animate={{ y: [0, 12, 0] }}
-        transition={{ duration: 2.5, repeat: Infinity }}
+        className="absolute right-8 bottom-20 z-20 flex flex-col items-center gap-2"
+        animate={{ y: [0, 8, 0] }}
+        transition={{ duration: 2, repeat: Infinity }}
       >
-        <motion.a 
-          href="#about"
-          className="text-sm text-gray-500 hover:text-orange-400 transition-colors"
+        <div className="w-6 h-10 border-2 border-orange-400 rounded-full flex items-start justify-center p-2">
+          <motion.div
+            className="w-1 h-2 bg-orange-400 rounded-full"
+            animate={{ y: [0, 8, 0] }}
+            transition={{ duration: 1.5, repeat: Infinity }}
+          />
+        </div>
+        <motion.span 
+          className="text-orange-400 text-xs font-medium"
+          animate={{ opacity: [0.5, 1, 0.5] }}
+          transition={{ duration: 2, repeat: Infinity }}
         >
-          Scroll to explore
-        </motion.a>
+          Scroll
+        </motion.span>
       </motion.div>
     </section>
   )
