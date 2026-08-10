@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useState } from 'react'
 import { Activity, Bell, Bot, CalendarDays, ChevronRight, CircleHelp, Clock3, Command, Gauge, LayoutDashboard, Menu, Radio, Search, ShieldCheck, Sparkles, Star, Target, Trophy, X } from 'lucide-react'
-import { PRODUCT, analystPrompts, fixtures, getFixture, initials, marketMix, type Fixture } from '@/lib/punta-data'
+import { PRODUCT, analystPrompts, fixtures, getFixture, initials, marketMix, popularPicks, type Fixture, type PopularPick } from '@/lib/punta-data'
 
 type View = 'today' | 'picks' | 'live' | 'ai'
 
@@ -44,6 +44,14 @@ function PickCard({ fixture, onSelect, featured = false }: { fixture: Fixture; o
   </button>
 }
 
+function PopularPicksBoard({ onSelect }: { onSelect: (fixture: Fixture) => void }) {
+  const [market, setMarket] = useState('All')
+  const [saved, setSaved] = useState<string[]>([])
+  const visible = popularPicks.filter((pick) => market === 'All' || pick.market === market)
+  const fixtureFor = (pick: PopularPick) => getFixture(pick.fixtureId)
+  return <section className="popular-board"><div className="popular-board-header"><div><span className="eyebrow">REFERENCE MARKET BOARD</span><h2>Popular picks</h2><p>What the board is leaning toward, paired with Punta&apos;s model probability.</p></div><Signal tone="muted">Not live sportsbook odds</Signal></div><div className="popular-tabs" role="tablist" aria-label="Popular pick markets">{['All', '1X2', 'Goals', 'BTTS', 'Cards'].map((item) => <button key={item} role="tab" aria-selected={market === item} className={market === item ? 'popular-tab-active' : ''} onClick={() => setMarket(item)}>{item}</button>)}</div><div className="popular-list">{visible.map((pick, index) => <div className="popular-row" key={pick.id}><span className="popular-rank">{String(index + 1).padStart(2, '0')}</span><button className="popular-fixture" onClick={() => onSelect(fixtureFor(pick))}><span>{fixtureFor(pick).homeShort} <em>vs</em> {fixtureFor(pick).awayShort}</span><small>{pick.market} · {pick.freshness}</small></button><div className="popular-selection"><span>{pick.selection}</span><strong>{pick.odds}</strong></div><div className="popular-signal"><div><i style={{ width: `${pick.popularity}%` }} /></div><span>{pick.popularity}% popular</span></div><div className={`confidence confidence-${pick.confidence.toLowerCase()}`}>{pick.probability}%</div><button className={`save-pick ${saved.includes(pick.id) ? 'save-pick-active' : ''}`} onClick={() => setSaved((current) => current.includes(pick.id) ? current.filter((id) => id !== pick.id) : [...current, pick.id])} aria-label={`${saved.includes(pick.id) ? 'Remove' : 'Save'} ${pick.selection}`}><Star /></button></div>)}</div><div className="popular-board-footer"><span><ShieldCheck />Popularity is a reference signal, not a recommendation.</span><button onClick={() => window.dispatchEvent(new CustomEvent('punta-view', { detail: 'picks' }))}>Open full picks <ChevronRight /></button></div></section>
+}
+
 function DetailSheet({ fixture, onClose }: { fixture: Fixture; onClose: () => void }) {
   return <div className="sheet-backdrop" role="presentation" onMouseDown={onClose}><aside className="detail-sheet" role="dialog" aria-modal="true" aria-label={`${fixture.home} versus ${fixture.away} intelligence`} onMouseDown={(event) => event.stopPropagation()}>
     <div className="sheet-header"><div><span className="eyebrow">{fixture.competition} · {fixture.kickoff}</span><h2>{fixture.home} <span>vs</span> {fixture.away}</h2></div><button className="icon-button" onClick={onClose} aria-label="Close details"><X /></button></div>
@@ -72,7 +80,7 @@ function TodayView({ onSelect }: { onSelect: (fixture: Fixture) => void }) {
     <div className="view-content">
       <section className="welcome-row"><div><div className="eyebrow">TUESDAY · 10 AUG 2026</div><h1>Good morning, Temitope.</h1><p>Your intelligence brief is ready. <span className="desktop-only">Five fixtures scanned across three competitions.</span></p></div><div className="brief-status"><Signal>Brief generated</Signal><small>08:42 Lagos time</small></div></section>
       <section className="metric-strip"><div><span>FIXTURES SCANNED</span><strong>05</strong><small>Across 3 competitions</small></div><div><span>HIGH CONFIDENCE</span><strong>03</strong><small>Above 70% probability</small></div><div><span>LIVE NOW</span><strong className="metric-live">01</strong><small>One match in play</small></div><div className="method"><span>MODEL PIPELINE</span><div><b>DATA</b><i /><b>MODEL</b><i /><b>CONTEXT</b></div><small>Last sync 14 seconds ago</small></div></section>
-      <div className="content-grid"><main><div className="section-heading"><div><span className="eyebrow">RANKED BY SIGNAL STRENGTH</span><h2>Top intelligence</h2></div><button className="text-button" onClick={() => window.dispatchEvent(new CustomEvent('punta-view', { detail: 'picks' }))}>View all picks <ChevronRight /></button></div><PickCard fixture={featured} onSelect={onSelect} featured /><div className="section-heading fixture-heading"><div><span className="eyebrow">SOURCE: MATCH CENTRE</span><h2>Fixture feed</h2></div><div className="feed-legend"><Signal>Live</Signal><Signal tone="muted">Upcoming</Signal></div></div><div className="fixture-list">{orderedFixtures.map((fixture) => <FixtureRow key={fixture.id} fixture={fixture} onSelect={onSelect} />)}</div></main><ContextPanel /></div>
+      <div className="content-grid"><main><div className="section-heading"><div><span className="eyebrow">RANKED BY SIGNAL STRENGTH</span><h2>Top intelligence</h2></div><button className="text-button" onClick={() => window.dispatchEvent(new CustomEvent('punta-view', { detail: 'picks' }))}>View all picks <ChevronRight /></button></div><PickCard fixture={featured} onSelect={onSelect} featured /><PopularPicksBoard onSelect={onSelect} /><div className="section-heading fixture-heading"><div><span className="eyebrow">SOURCE: MATCH CENTRE</span><h2>Fixture feed</h2></div><div className="feed-legend"><Signal>Live</Signal><Signal tone="muted">Upcoming</Signal></div></div><div className="fixture-list">{orderedFixtures.map((fixture) => <FixtureRow key={fixture.id} fixture={fixture} onSelect={onSelect} />)}</div></main><ContextPanel /></div>
     </div>
   )
 }
@@ -84,7 +92,7 @@ function ContextPanel() {
 function PicksView({ onSelect }: { onSelect: (fixture: Fixture) => void }) {
   const [filter, setFilter] = useState('All')
   const filtered = fixtures.filter((fixture) => filter === 'All' || fixture.confidence === filter || fixture.market === filter)
-  return <div className="view-content"><section className="page-heading"><div><span className="eyebrow">MODEL OUTPUT · 05 PICKS</span><h1>Ranked picks</h1><p>Every recommendation is scored by probability, confidence, and risk.</p></div><div className="freshness-box"><Signal>Provider data fresh</Signal><small>Last reconciled 8 minutes ago</small></div></section><div className="filter-bar">{['All', 'High', 'Medium', '1X2', 'Goals'].map((item) => <button key={item} className={filter === item ? 'filter-active' : ''} onClick={() => setFilter(item)}>{item}</button>)}</div><div className="picks-grid">{filtered.map((fixture) => <PickCard key={fixture.id} fixture={fixture} onSelect={onSelect} />)}</div></div>
+  return <div className="view-content"><section className="page-heading"><div><span className="eyebrow">MODEL OUTPUT · 05 PICKS</span><h1>Ranked picks</h1><p>Every recommendation is scored by probability, confidence, and risk.</p></div><div className="freshness-box"><Signal>Provider data fresh</Signal><small>Last reconciled 8 minutes ago</small></div></section><PopularPicksBoard onSelect={onSelect} /><div className="filter-bar">{['All', 'High', 'Medium', '1X2', 'Goals'].map((item) => <button key={item} className={filter === item ? 'filter-active' : ''} onClick={() => setFilter(item)}>{item}</button>)}</div><div className="picks-grid">{filtered.map((fixture) => <PickCard key={fixture.id} fixture={fixture} onSelect={onSelect} />)}</div></div>
 }
 
 function LiveView({ onSelect }: { onSelect: (fixture: Fixture) => void }) {

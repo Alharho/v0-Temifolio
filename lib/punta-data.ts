@@ -1,6 +1,19 @@
 export type MatchStatus = 'live' | 'upcoming' | 'finished'
 export type Confidence = 'High' | 'Medium' | 'Watch'
 
+export type PopularPick = {
+  id: string
+  fixtureId: string
+  market: '1X2' | 'Goals' | 'BTTS' | 'Cards'
+  selection: string
+  odds: string
+  popularity: number
+  probability: number
+  confidence: Confidence
+  freshness: string
+  source: string
+}
+
 export type Fixture = {
   id: string
   competition: string
@@ -69,6 +82,14 @@ export const fixtures: Fixture[] = [
     risk: 'Derby emotion', factors: ['High duel intensity', 'Both attack ratings positive', 'Lineup uncertainty'],
     availability: '2 players pending', freshness: 'Updated 25m ago', source: 'Punta model · Liga data', xg: [1.48, 1.27],
   },
+]
+
+export const popularPicks: PopularPick[] = [
+  { id: 'pick-arsenal', fixtureId: 'ars-che', market: '1X2', selection: 'Arsenal', odds: '1.74', popularity: 82, probability: 68, confidence: 'High', freshness: 'Updated 8m ago', source: 'Punta reference board' },
+  { id: 'pick-rma-goals', fixtureId: 'rma-bet', market: 'Goals', selection: 'Over 2.5', odds: '1.62', popularity: 76, probability: 73, confidence: 'High', freshness: 'Updated 12m ago', source: 'Punta reference board' },
+  { id: 'pick-inter', fixtureId: 'int-juv', market: '1X2', selection: 'Inter Milan', odds: '1.31', popularity: 91, probability: 79, confidence: 'High', freshness: 'Live · 14s ago', source: 'Punta live board' },
+  { id: 'pick-benfica-btts', fixtureId: 'ben-por', market: 'BTTS', selection: 'Yes', odds: '1.83', popularity: 61, probability: 64, confidence: 'Medium', freshness: 'Updated 25m ago', source: 'Punta reference board' },
+  { id: 'pick-rma-corners', fixtureId: 'rma-bet', market: 'Cards', selection: 'Under 5.5 cards', odds: '1.68', popularity: 48, probability: 58, confidence: 'Watch', freshness: 'Updated 12m ago', source: 'Punta reference board' },
 ]
 
 export const analystPrompts = ['Why is Arsenal favoured?', 'Show live momentum', 'Which pick has least risk?']
