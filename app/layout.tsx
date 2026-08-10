@@ -22,13 +22,13 @@ const playfair = Playfair_Display({
 });
 
 export const metadata: Metadata = {
-  title: 'Temitope Olalere | Creative Designer & Brand Strategist',
-  description: 'Highly creative Graphic Designer with 5+ years of experience delivering brand-focused designs, digital marketing campaigns and cross-industry visual storytelling.',
-  keywords: ['Graphic Designer', 'Brand Strategist', 'Visual Design', 'Digital Marketing', 'Lagos', 'Nigeria'],
-  authors: [{ name: 'Temitope Olalere' }],
+  title: 'Punta Intelligence | Football, with signal',
+  description: 'A data-first football intelligence terminal for clearer fixture context, ranked picks, and live match interpretation.',
+  keywords: ['Football intelligence', 'Match analysis', 'Fixture predictions', 'Punta Intelligence'],
+  authors: [{ name: 'Punta Intelligence' }],
   openGraph: {
-    title: 'Temitope Olalere | Creative Designer & Brand Strategist',
-    description: 'Highly creative Graphic Designer with 5+ years of experience delivering brand-focused designs.',
+    title: 'Punta Intelligence | Football, with signal',
+    description: 'A data-first football intelligence terminal for clearer fixture context, ranked picks, and live match interpretation.',
     type: 'website',
   },
   icons: {
